@@ -52,10 +52,16 @@ RUN crontab /etc/cron.d/laravel-cron
 # Copy Supervisor configuration
 COPY ./docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 WORKDIR /var/www/html
 
 # Copy application files
 COPY . .
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
 # Set permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
