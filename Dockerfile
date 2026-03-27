@@ -64,6 +64,10 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Ensure .env exists and has an APP_KEY
+RUN if [ ! -f .env ]; then cp .env.example .env; fi \
+    && if [ -z "$(grep APP_KEY .env | cut -d'=' -f2)" ]; then php artisan key:generate --force; fi
+
 # Set permissions for Laravel
 RUN mkdir -p /var/www/html/database \
     && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database \
