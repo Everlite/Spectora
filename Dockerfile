@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y \
     libxrandr2 \
     libgbm1 \
     libasound2 \
+    libzip-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js and Lighthouse
@@ -42,7 +43,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && npm install -g lighthouse
 
 # PHP Extensions
-RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd zip
 
 # Configure Cron for Laravel Scheduler
 COPY ./docker/laravel.cron /etc/cron.d/laravel-cron
