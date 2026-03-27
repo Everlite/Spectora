@@ -19,7 +19,6 @@ storage/framework/testing/*
 storage/framework/views/*
 storage/logs/*
 public/storage
-public/build
 
 # Docker
 docker-compose.yml

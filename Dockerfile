@@ -71,6 +71,9 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Build frontend assets (Vite + Tailwind + Alpine.js)
+RUN npm install && npm run build && rm -rf node_modules
+
 # Copy startup script
 COPY ./docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
