@@ -4,36 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * DEPRECATED: The plans table is dropped by convert_out_of_saas migration.
+ * This migration is now a no-op for safe migrate:fresh execution.
+ */
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        if (!Schema::hasTable('plans')) {
-            return;
-        }
-
-        // Plus (ID 1) -> 10 Domains
-        DB::table('plans')->where('id', 1)->update(['max_domains' => 10]);
-
-        // Pro (ID 2) -> 25 Domains
-        DB::table('plans')->where('id', 2)->update(['max_domains' => 25]);
-
-        // Ultimate (ID 3) -> 100 Domains
-        DB::table('plans')->where('id', 3)->update(['max_domains' => 100]);
+        // No-op: plans table is removed by Agency Edition conversion
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        if (!Schema::hasTable('plans')) {
-            return;
-        }
-
-        DB::table('plans')->update(['max_domains' => null]);
+        // No-op
     }
 };
