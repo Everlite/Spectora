@@ -58,6 +58,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
+# Pre-create directories for volumes and set permissions
+RUN mkdir -p /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache
+
 # Copy application files
 COPY . .
 
@@ -68,9 +73,9 @@ RUN composer install --no-dev --optimize-autoloader
 RUN if [ ! -f .env ]; then cp .env.example .env; fi \
     && if [ -z "$(grep APP_KEY .env | cut -d'=' -f2)" ]; then php artisan key:generate --force; fi
 
-# Set permissions for Laravel
-RUN mkdir -p /var/www/html/database \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database \
+
+# Final permission check after composer/env actions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
 # Expose port 80

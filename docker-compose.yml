@@ -15,6 +15,7 @@ services:
       - ./routes:/var/www/html/routes
       - ./public:/var/www/html/public
       - spectora-db:/var/www/html/database
+      - spectora-storage:/var/www/html/storage
     environment:
       - DB_CONNECTION=sqlite
       - DB_DATABASE=/var/www/html/database/database.sqlite
@@ -26,3 +27,4 @@ services:
 
 volumes:
   spectora-db:
+  spectora-storage:
