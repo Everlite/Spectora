@@ -13,7 +13,6 @@ services:
       - ./config:/var/www/html/config
       - ./resources:/var/www/html/resources
       - ./routes:/var/www/html/routes
-      - ./public:/var/www/html/public
       - spectora-db:/var/www/html/database
       - spectora-storage:/var/www/html/storage
     environment:
