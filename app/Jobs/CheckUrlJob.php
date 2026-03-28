@@ -140,7 +140,6 @@ class CheckUrlJob implements ShouldQueue
             Log::info("Updating domain {$this->domain->url} Status: {$statusCode}, SSL: {$sslDays}");
             try {
                 $this->domain->update([
-                    'status' => ($statusCode >= 200 && $statusCode < 400) ? 'online' : 'offline',
                     'status_code' => $statusCode,
                     'ssl_days_left' => $sslDays,
                     'response_time' => $responseTime ?? 0,

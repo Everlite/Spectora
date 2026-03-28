@@ -26,7 +26,6 @@ class Domain extends Model
         'url',
         'keyword_must_contain',
         'keyword_must_not_contain',
-        'status',
         'status_code',
         'ssl_days_left',
         'response_time',
