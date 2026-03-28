@@ -15,11 +15,17 @@ return new class extends Migration
             return;
         }
 
-        Schema::table('domains', function (Blueprint $table) {
-            if (!Schema::hasColumn('domains', 'last_pagespeed_details')) {
-                $table->json('last_pagespeed_details')->nullable()->after('pagespeed_desktop');
+        try {
+            Schema::table('domains', function (Blueprint $table) {
+                if (!Schema::hasColumn('domains', 'last_pagespeed_details')) {
+                    $table->json('last_pagespeed_details')->nullable()->after('pagespeed_desktop');
+                }
+            });
+        } catch (\Exception $e) {
+            if (!str_contains($e->getMessage(), 'duplicate column name')) {
+                throw $e;
             }
-        });
+        }
     }
 
     /**
