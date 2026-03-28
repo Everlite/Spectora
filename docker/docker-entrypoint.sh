@@ -26,10 +26,13 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
-# 3. Check for APP_KEY
-if [ -z "$(grep -E "^APP_KEY=" .env | cut -d'=' -f2)" ]; then
-    echo "APP_KEY missing. Generating new key..."
+# 3. Check for APP_KEY (generate if missing or empty)
+CURRENT_KEY=$(grep "^APP_KEY=" .env | cut -d'=' -f2 | tr -d ' ')
+if [ -z "$CURRENT_KEY" ]; then
+    echo "APP_KEY missing or empty. Generating new key..."
     php artisan key:generate --force
+else
+    echo "APP_KEY detected. Skipping generation."
 fi
 
 # 4. Ensure SQLite database exists
