@@ -197,6 +197,13 @@
     <div class="py-10" x-data="dashboardData()">
         <div class="w-full px-4 sm:px-6 lg:px-8 space-y-6">
 
+            @if (session('error'))
+                <div class="mb-4 bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-xl relative shadow-lg" role="alert">
+                    <strong class="font-bold">Fehler:</strong>
+                    <span class="block sm:inline">{{ session('error') }}</span>
+                </div>
+            @endif
+
             <!-- Tabs Navigation - Professional Style -->
             <div class="card-base p-1.5 flex w-full overflow-x-auto scrollbar-hide">
                 <nav class="flex space-x-1 w-full" aria-label="Tabs">

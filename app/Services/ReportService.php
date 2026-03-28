@@ -43,6 +43,22 @@ class ReportService
         // 4. Security Status
         $securityStatus = ucfirst($domain->safety_status ?? 'Unknown');
 
+        // Parse safety details into a flat array of strings for the report
+        $safetyIssues = [];
+        $rawSafetyDetails = $domain->safety_details ?? [];
+        if (isset($rawSafetyDetails['keywords_found'])) {
+            foreach ((array)$rawSafetyDetails['keywords_found'] as $kw) {
+                $safetyIssues[] = "Forbidden keyword found: " . $kw;
+            }
+        }
+        if (isset($rawSafetyDetails['watchdog']['issues'])) {
+            foreach ((array)$rawSafetyDetails['watchdog']['issues'] as $issue) {
+                $title = $issue['title'] ?? 'Security Issue';
+                $desc = $issue['description'] ?? '';
+                $safetyIssues[] = $title . ($desc ? ': ' . $desc : '');
+            }
+        }
+
         $data = [
             'domain' => $domain,
             'logoBase64' => $logoBase64,
@@ -50,7 +66,7 @@ class ReportService
             'avgResponseTime' => $avgResponseTime,
             'visitors' => $visitors,
             'securityStatus' => $securityStatus,
-            'safetyDetails' => $domain->safety_details,
+            'safetyDetails' => $safetyIssues,
             'date' => now()->format('F Y'),
         ];
 
