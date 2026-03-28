@@ -199,7 +199,7 @@
                 @endforeach
 
             </div> 
-        </div>
+        <!-- End Main View -->
 
     <!-- Notes Modal -->
     <div x-show="isNotesOpen" 
@@ -454,6 +454,7 @@
             </div>
         </div>
     </div>
+    </div> <!-- Close dashboardManager (line 50) -->
 
 
 
