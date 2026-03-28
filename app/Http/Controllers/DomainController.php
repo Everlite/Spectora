@@ -317,6 +317,12 @@ class DomainController extends Controller
         $psHistoryLabels = $psHistory->map(fn($h) => $h->created_at->format('d.m.'))->values();
         $psHistoryScores = $psHistory->pluck('pagespeed_score_desktop')->values();
 
+        // Main Performance Score
+        $score = $domain->pagespeed_score_desktop ?? 0;
+        $scoreColor = $score >= 90 ? 'emerald' : ($score >= 50 ? 'amber' : 'rose');
+
+        // Watchdog / Security
+        $watchdogData = $domain->safety_details['watchdog'] ?? [];
 
         // --- 4. Notes ---
         $notes = $domain->notes()->orderBy('created_at', 'desc')->get();
@@ -334,7 +340,7 @@ class DomainController extends Controller
             'uptime', 'avgResponseTime', 'sslDaysRemaining', 'recentChecks', 'monitoredUrls',
             'historyLabels', 'historyResponseTimes', 'psHistoryLabels', 'psHistoryScores',
             // Security/Audit
-            'criticalCount', 'warningCount', 'auditDetails',
+            'criticalCount', 'warningCount', 'auditDetails', 'score', 'scoreColor', 'watchdogData',
             // Notes
             'notes'
         ));
