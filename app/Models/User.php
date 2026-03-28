@@ -44,6 +44,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function getNameAttribute()
+    {
+        return trim("{$this->first_name} {$this->last_name}");
+    }
+
     public function domains()
     {
         return $this->hasMany(Domain::class);
