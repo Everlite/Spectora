@@ -57,11 +57,9 @@ echo "Running database migrations..."
 # Point to the database in storage for the migration command
 DB_DATABASE="$NEW_DB" php artisan migrate --force
 
-# 6. Create storage link if missing
-if [ ! -L public/storage ]; then
-    echo "Creating storage link..."
-    php artisan storage:link
-fi
+# 6. Create storage link (forces overwriting existing links/files if present)
+echo "Ensuring storage link..."
+php artisan storage:link --force
 
 # 7. Start Supervisor (Apache + Cron + Queue Worker)
 echo "Starting services via Supervisor..."
