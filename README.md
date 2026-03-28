@@ -1,4 +1,6 @@
-# 🛡️ Spectora: Website Monitoring Suite
+<img width="256" height="209" alt="spectora_logo" src="https://github.com/user-attachments/assets/2166df18-7009-466d-99b7-de29dae8bb66" />
+
+#  Spectora: Website Monitoring Suite
 
 [![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com)
@@ -20,7 +22,7 @@ Unlike traditional monitoring tools, Spectora operates fully autonomously. All a
 
 ---
 
-## 📊 Core Features
+##  Core Features
 
 ### 1. Uptime & Performance Monitoring
 Real-time monitoring of availability and latency for your domains.
@@ -42,7 +44,7 @@ Generate professional reports for your clients directly from the dashboard.
 
 ---
 
-## 🛠️ Technical Architecture
+##  Technical Architecture
 
 Spectora utilizes a modern, dockerized setup that includes all necessary dependencies for local audits.
 
@@ -65,7 +67,7 @@ graph TD
 
 ---
 
-## 📥 Installation
+##  Installation
 
 ### Prerequisites
 *   **Docker & Docker Compose**
@@ -88,7 +90,7 @@ The application is now accessible at **http://localhost:8000**.
 
 ---
 
-## ⚙️ Configuration (.env)
+##  Configuration (.env)
 
 Since Spectora uses no external APIs, configuration is minimal:
 
@@ -98,7 +100,7 @@ Since Spectora uses no external APIs, configuration is minimal:
 
 ---
 
-## 🌍 Production Deployment & Analytics Tracking
+##  Production Deployment & Analytics Tracking
 
 By default, Spectora is accessible at `http://localhost:8000`. If you want to use the **Analytics Tracking** feature (to track visitors on your clients' websites), your Spectora dashboard must be publicly accessible via a real domain/subdomain (e.g., `spectora.your-agency.com`).
 
@@ -133,7 +135,7 @@ certbot --nginx -d spectora.your-agency.com
 
 ---
 
-## 📊 Analytics: Privacy-by-Design
+##  Analytics: Privacy-by-Design
 
 The Spectora tracking engine was built with the **GDPR** in mind. It provides accurate stats without compromising visitor privacy:
 *   **No Cookies**: We do not use any tracking cookies.
@@ -141,7 +143,7 @@ The Spectora tracking engine was built with the **GDPR** in mind. It provides ac
 *   **No Third Parties**: No data ever leaves your server. Unlike Google Analytics, your client data is 100% yours.
 ---
 
-## 🛡️ Data Privacy & GDPR
+##  Data Privacy & GDPR
 
 Spectora is the ideal choice for European agencies:
 1.  **Data Sovereignty**: All analytical data remains within your own infrastructure.
@@ -150,11 +152,11 @@ Spectora is the ideal choice for European agencies:
 
 ---
 
-## 📝 License & Credits
+##  License & Credits
 
 Developed for agencies that value privacy and independence. 
 
-### 🔄 Recent Updates
+###  Recent Updates
 *   **Infrastructure**: Upgraded core framework to Laravel 12.
 *   **Monitoring Engine**: Optimized `CheckUrlJob` and `CheckDomainJob` for precise status tracking and preventing database race-conditions.
 *   **Dashboard UI**: Restored HTML structural integrity for absolute tab-isolation (Monitoring vs. Analytics) and separated Chart.js tracking instances.
