@@ -339,8 +339,17 @@
                             </span>
                         </div>
                         <div class="flex items-baseline gap-1 mb-3">
-                            <span class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white">{{ $avgResponseTime }}</span>
-                            <span class="text-base lg:text-lg text-slate-400 dark:text-gray-500">ms</span>
+                            <span class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white">
+                                @if(isset($avgResponseTime))
+                                    @if($avgResponseTime < 1000)
+                                        {{ $avgResponseTime }}<span class="text-lg lg:text-xl text-slate-500 font-medium">ms</span>
+                                    @else
+                                        {{ number_format($avgResponseTime / 1000, 2) }}<span class="text-lg lg:text-xl text-slate-500 font-medium">s</span>
+                                    @endif
+                                @else
+                                    -
+                                @endif
+                            </span>
                         </div>
                         <div class="border-t border-slate-100 dark:border-gray-700 pt-2">
                             <div class="h-12 lg:h-16">
@@ -487,7 +496,17 @@
                                     <p class="text-[10px] font-bold {{ $mUrl->last_status_code < 400 ? 'text-emerald-500' : 'text-rose-500' }}">
                                         {{ $mUrl->last_status_code ?: 'PENDING' }}
                                     </p>
-                                    <p class="text-[9px] text-slate-400 font-mono">{{ $mUrl->last_response_time }}ms</p>
+                                    <p class="text-[9px] text-slate-400 font-mono">
+                                        @if(isset($mUrl->last_response_time))
+                                            @if($mUrl->last_response_time < 1000)
+                                                {{ $mUrl->last_response_time }}ms
+                                            @else
+                                                {{ number_format($mUrl->last_response_time / 1000, 2) }}s
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </p>
                                 </div>
                                 <div class="w-2 h-2 rounded-full {{ $mUrl->last_status_code < 400 ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500' }}"></div>
                             </div>
@@ -1154,7 +1173,16 @@
                                                                 </span>
                                                             </td>
                                                             <td class="py-3 text-gray-300 text-sm font-mono">
-                                                                {{ $check->response_time ?? '-' }}ms</td>
+                                                                @if(isset($check->response_time))
+                                                                    @if($check->response_time < 1)
+                                                                        {{ round($check->response_time * 1000, 0) }}ms
+                                                                    @else
+                                                                        {{ number_format($check->response_time, 2) }}s
+                                                                    @endif
+                                                                @else
+                                                                    -
+                                                                @endif
+                                                            </td>
                                                             <td class="py-3 text-red-400 text-xs truncate max-w-[100px] sm:max-w-xs">
                                                                 {{ $check->error_message ?? 'Verbindungsfehler' }}</td>
                                                         </tr>
@@ -1194,7 +1222,16 @@
                                                             </span>
                                                         </td>
                                                         <td class="py-3 text-gray-300 text-sm font-mono">
-                                                            {{ $check->response_time }}ms</td>
+                                                            @if(isset($check->response_time))
+                                                                @if($check->response_time < 1)
+                                                                    {{ round($check->response_time * 1000, 0) }}ms
+                                                                @else
+                                                                    {{ number_format($check->response_time, 2) }}s
+                                                                @endif
+                                                            @else
+                                                                -
+                                                            @endif
+                                                        </td>
                                                         <td class="py-3 text-gray-400 text-xs truncate max-w-[100px] sm:max-w-xs">
                                                             {{ $check->error_message ?? '-' }}</td>
                                                     </tr>
