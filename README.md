@@ -1,4 +1,4 @@
-# 🛡️ Spectora: Google-Free Agency Edition
+# 🛡️ Spectora: Website Monitoring Suite
 
 [![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com)
