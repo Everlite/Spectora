@@ -28,6 +28,7 @@ class Domain extends Model
         'keyword_must_not_contain',
         'safety_status',
         'safety_details',
+        'visitors_today',
     ];
 
     protected $casts = [
