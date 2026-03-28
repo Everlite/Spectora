@@ -35,14 +35,27 @@ else
     echo "APP_KEY detected. Skipping generation."
 fi
 
-# 4. Ensure SQLite database exists
-touch /var/www/html/database/database.sqlite
-chown www-data:www-data /var/www/html/database/database.sqlite
-chmod 775 /var/www/html/database/database.sqlite
+# 4. Handle SQLite database (Move to storage to avoid volume-masking migrations)
+OLD_DB="/var/www/html/database/database.sqlite"
+NEW_DB="/var/www/html/storage/database.sqlite"
+
+if [ -f "$OLD_DB" ] && [ ! -f "$NEW_DB" ]; then
+    echo "Found database in old location. Moving to storage for better persistence..."
+    mv "$OLD_DB" "$NEW_DB"
+fi
+
+if [ ! -f "$NEW_DB" ]; then
+    echo "Creating new database in storage..."
+    touch "$NEW_DB"
+fi
+
+chown www-data:www-data "$NEW_DB"
+chmod 775 "$NEW_DB"
 
 # 5. Run migrations
 echo "Running database migrations..."
-php artisan migrate --force
+# Point to the database in storage for the migration command
+DB_DATABASE="$NEW_DB" php artisan migrate --force
 
 # 6. Create storage link if missing
 if [ ! -L public/storage ]; then

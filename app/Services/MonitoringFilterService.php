@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Domain;
+use App\Services\RobotsTxtService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 

@@ -13,11 +13,10 @@ services:
       - ./config:/var/www/html/config
       - ./resources:/var/www/html/resources
       - ./routes:/var/www/html/routes
-      - spectora-db:/var/www/html/database
       - spectora-storage:/var/www/html/storage
     environment:
       - DB_CONNECTION=sqlite
-      - DB_DATABASE=/var/www/html/database/database.sqlite
+      - DB_DATABASE=/var/www/html/storage/database.sqlite
       - APP_URL=http://localhost:8000
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/login"]
