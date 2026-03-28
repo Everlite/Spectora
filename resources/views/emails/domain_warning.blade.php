@@ -10,8 +10,8 @@
     </style>
 </head>
 <body>
-    <p>Hallo,</p>
-    <p>deine Website <strong>{{ $domain->url }}</strong> meldet folgende Warnung:</p>
+    <p>Hello,</p>
+    <p>Your website <strong>{{ $domain->url }}</strong> is reporting the following warning:</p>
     
     <ul>
         @foreach($issues as $issue)
@@ -19,7 +19,7 @@
         @endforeach
     </ul>
 
-    <p>Geprüft: {{ now()->format('d.m.Y H:i:s') }}</p>
+    <p>Checked: {{ now()->format('Y-m-d H:i:s') }}</p>
     <hr>
     <p>Monitoring Service</p>
 </body>

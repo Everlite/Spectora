@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Analytics für') }} {{ $domain->url }}
+                {{ __('Analytics for') }} {{ $domain->url }}
             </h2>
             <div class="flex items-center gap-4">
                 <button x-data @click="$dispatch('open-tracking-modal')" class="px-4 py-2 bg-spectora-cyan hover:bg-cyan-500 text-white text-sm font-bold rounded transition shadow-lg hover:shadow-spectora-cyan/50">
                     &lt;/&gt; Tracking Code
                 </button>
-                <span class="text-sm text-gray-500 dark:text-gray-400">Letzte 30 Tage</span>
+                <span class="text-sm text-gray-500 dark:text-gray-400">Last 30 Days</span>
             </div>
         </div>
     </x-slot>
@@ -30,7 +30,7 @@
                                 </h3>
                                 <div class="mt-4">
                                     <p class="text-sm text-gray-400 mb-4">
-                                        Füge diesen Code in den <code>&lt;head&gt;</code> deiner Website ein:
+                                        Add this code to the <code>&lt;head&gt;</code> of your website:
                                     </p>
                                     <div class="bg-gray-900 rounded-lg p-4 relative group text-left">
                                         <code class="text-sm text-green-400 font-mono break-all">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse border-t border-gray-700">
                         <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-gray-700 text-base font-medium text-gray-300 hover:bg-gray-600 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="showTrackingModal = false">
-                            Schließen
+                            Close
                         </button>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
             
             <!-- Main Chart -->
             <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Besucher & Aufrufe</h3>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Visitors & Pageviews</h3>
                 <div class="relative h-80 w-full">
                     <canvas id="mainChart"></canvas>
                 </div>
@@ -67,13 +67,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Top Pages -->
                 <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Top Seiten</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Top Pages</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-4 py-3">URL</th>
-                                    <th scope="col" class="px-4 py-3 text-right">Aufrufe</th>
+                                    <th scope="col" class="px-4 py-3 text-right">Pageviews</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,7 +86,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="2" class="px-4 py-3 text-center">Keine Daten verfügbar</td>
+                                        <td colspan="2" class="px-4 py-3 text-center">No data available</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -96,20 +96,20 @@
 
                 <!-- Top Sources -->
                 <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Top Quellen</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Top Sources</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-4 py-3">Quelle</th>
-                                    <th scope="col" class="px-4 py-3 text-right">Besucher</th>
+                                    <th scope="col" class="px-4 py-3">Source</th>
+                                    <th scope="col" class="px-4 py-3 text-right">Visitors</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($topSources as $source)
                                     <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                                         <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
-                                            {{ $source->referrer_domain ?: 'Direkt / Unbekannt' }}
+                                            {{ $source->referrer_domain ?: 'Direct / Unknown' }}
                                         </td>
                                         <td class="px-4 py-3 text-right">{{ number_format($source->total, 0, ',', '.') }}</td>
                                     </tr>
@@ -126,7 +126,7 @@
 
             <!-- Devices -->
             <div class="p-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Geräte</h3>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Devices</h3>
                 <div class="flex flex-wrap gap-4">
                     @foreach($devices as $device)
                         <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -167,7 +167,7 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Besucher (Unique)',
+                            label: 'Visitors (Unique)',
                             data: visitors,
                             borderColor: '#8B5CF6', // Violet
                             backgroundColor: 'rgba(139, 92, 246, 0.1)',
@@ -175,7 +175,7 @@
                             fill: true
                         },
                         {
-                            label: 'Seitenaufrufe',
+                            label: 'Pageviews',
                             data: pageviews,
                             borderColor: '#38BDF8', // Cyan
                             backgroundColor: 'rgba(56, 189, 248, 0.1)',

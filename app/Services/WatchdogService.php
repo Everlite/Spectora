@@ -9,7 +9,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class WatchdogService
 {
     /**
-     * Kategorisierte Spam-Keywords
+     * Categorized spam keywords
      */
     protected array $spamKeywords = [
         'pharma' => ['viagra', 'cialis', 'levitra', 'pharmacy', 'pills online', 'buy medication'],
@@ -20,15 +20,15 @@ class WatchdogService
     ];
 
     /**
-     * Verdächtige externe Domains
+     * Suspicious external domains
      */
     protected array $suspiciousDomains = [
         'bit.ly', 'tinyurl.com', 'goo.gl', // URL-Shortener
-        '.ru', '.cn', '.tk', '.ml', '.ga', // Bekannte Spam-TLDs
+        '.ru', '.cn', '.tk', '.ml', '.ga', // Known spam TLDs
     ];
 
     /**
-     * Scannt eine Domain auf Sicherheitsprobleme
+     * Scans a domain for security issues
      */
     public function scan(Domain $domain): array
     {
@@ -52,10 +52,10 @@ class WatchdogService
                     'issues' => [[
                         'type' => 'connection_error',
                         'severity' => 'critical',
-                        'title' => 'Website nicht erreichbar',
-                        'description' => 'Die Website konnte nicht geladen werden (HTTP ' . $response->status() . ').',
-                        'explanation' => 'SpectoraBot kann die Seite nicht crawlen. Das schadet dem SEO-Ranking massiv.',
-                        'recommendation' => 'Prüfe, ob die Website online ist und ob SpectoraBot nicht blockiert wird (robots.txt, .htaccess).',
+                        'title' => 'Website unreachable',
+                        'description' => 'The website could not be loaded (HTTP ' . $response->status() . ').',
+                        'explanation' => 'SpectoraBot cannot crawl the page. This significantly harms SEO ranking.',
+                        'recommendation' => 'Check if the website is online and if SpectoraBot is not being blocked (robots.txt, .htaccess).',
                     ]],
                     'summary' => ['critical' => 1, 'warning' => 0, 'info' => 0]
                 ];
@@ -66,7 +66,7 @@ class WatchdogService
             $crawler = new Crawler($body);
 
             // ═══════════════════════════════════════════════════
-            // CHECK 1: Title-Tag Analyse
+            // CHECK 1: Title tag analysis
             // ═══════════════════════════════════════════════════
             $titleIssue = $this->checkTitle($crawler);
             if ($titleIssue) {
@@ -75,7 +75,7 @@ class WatchdogService
             }
 
             // ═══════════════════════════════════════════════════
-            // CHECK 2: Spam-Keyword-Scan
+            // CHECK 2: Spam keyword scan
             // ═══════════════════════════════════════════════════
             $keywordIssues = $this->checkSpamKeywords($bodyLower);
             foreach ($keywordIssues as $issue) {
@@ -84,7 +84,7 @@ class WatchdogService
             }
 
             // ═══════════════════════════════════════════════════
-            // CHECK 3: Verdächtige externe Links
+            // CHECK 3: Suspicious external links
             // ═══════════════════════════════════════════════════
             $linkIssues = $this->checkSuspiciousLinks($crawler, $url);
             foreach ($linkIssues as $issue) {
@@ -93,7 +93,7 @@ class WatchdogService
             }
 
             // ═══════════════════════════════════════════════════
-            // CHECK 4: Hidden Content (display:none mit Text)
+            // CHECK 4: Hidden content (display:none with text)
             // ═══════════════════════════════════════════════════
             $hiddenIssue = $this->checkHiddenContent($body);
             if ($hiddenIssue) {
@@ -102,7 +102,7 @@ class WatchdogService
             }
 
             // ═══════════════════════════════════════════════════
-            // CHECK 5: Verdächtige Iframes
+            // CHECK 5: Suspicious iframes
             // ═══════════════════════════════════════════════════
             $iframeIssues = $this->checkIframes($crawler);
             foreach ($iframeIssues as $issue) {
@@ -111,7 +111,7 @@ class WatchdogService
             }
 
             // ═══════════════════════════════════════════════════
-            // CHECK 6: Meta-Refresh Redirect
+            // CHECK 6: Meta refresh redirect
             // ═══════════════════════════════════════════════════
             $redirectIssue = $this->checkMetaRedirect($crawler);
             if ($redirectIssue) {
@@ -120,7 +120,7 @@ class WatchdogService
             }
 
             // ═══════════════════════════════════════════════════
-            // CHECK 7: Search Console Verification
+            // CHECK 7: Search Console verification
             // ═══════════════════════════════════════════════════
             $verificationInfo = $this->checkSearchConsoleVerification($bodyLower);
             if ($verificationInfo) {
@@ -129,7 +129,7 @@ class WatchdogService
             }
 
             // ═══════════════════════════════════════════════════
-            // CHECK 8: Verdächtige externe Scripts
+            // CHECK 8: Suspicious external scripts
             // ═══════════════════════════════════════════════════
             $scriptIssues = $this->checkSuspiciousScripts($crawler);
             foreach ($scriptIssues as $issue) {
@@ -143,16 +143,16 @@ class WatchdogService
                 'issues' => [[
                     'type' => 'scan_error',
                     'severity' => 'warning',
-                    'title' => 'Scan fehlgeschlagen',
-                    'description' => 'Fehler beim Scannen: ' . $e->getMessage(),
-                    'explanation' => 'Der Watchdog konnte die Seite nicht vollständig analysieren.',
-                    'recommendation' => 'Überprüfe, ob die URL korrekt ist und die Seite erreichbar ist.',
+                    'title' => 'Scan failed',
+                    'description' => 'Error during scan: ' . $e->getMessage(),
+                    'explanation' => 'The watchdog could not fully analyze the page.',
+                    'recommendation' => 'Check if the URL is correct and the page is reachable.',
                 ]],
                 'summary' => ['critical' => 0, 'warning' => 1, 'info' => 0]
             ];
         }
 
-        // Gesamtstatus ermitteln
+        // Determine overall status
         $status = 'safe';
         if ($summary['critical'] > 0) {
             $status = 'danger';
@@ -168,7 +168,7 @@ class WatchdogService
     }
 
     // ═══════════════════════════════════════════════════════════
-    // EINZELNE CHECK-METHODEN
+    // INDIVIDUAL CHECK METHODS
     // ═══════════════════════════════════════════════════════════
 
     private function checkTitle(Crawler $crawler): ?array
@@ -179,10 +179,10 @@ class WatchdogService
             return [
                 'type' => 'missing_title',
                 'severity' => 'warning',
-                'title' => 'Kein Title-Tag gefunden',
-                'description' => 'Die Seite hat keinen <title>-Tag.',
-                'explanation' => 'Der Title-Tag ist essentiell für SEO und wird in Suchergebnissen angezeigt.',
-                'recommendation' => 'Füge einen aussagekräftigen <title>-Tag im <head>-Bereich hinzu.',
+                'title' => 'No title tag found',
+                'description' => 'The page has no <title> tag.',
+                'explanation' => 'The title tag is essential for SEO and is displayed in search results.',
+                'recommendation' => 'Add a descriptive <title> tag in the <head> section.',
             ];
         }
 
@@ -192,34 +192,34 @@ class WatchdogService
             return [
                 'type' => 'empty_title',
                 'severity' => 'warning',
-                'title' => 'Leerer Title-Tag',
-                'description' => 'Der <title>-Tag ist leer.',
-                'explanation' => 'Ein leerer Title schadet dem SEO-Ranking und sieht in Suchergebnissen unprofessionell aus.',
-                'recommendation' => 'Füge einen beschreibenden Titel hinzu (50-60 Zeichen optimal).',
+                'title' => 'Empty title tag',
+                'description' => 'The <title> tag is empty.',
+                'explanation' => 'An empty title harms SEO ranking and looks unprofessional in search results.',
+                'recommendation' => 'Add a descriptive title (50-60 characters optimal).',
             ];
         }
 
-        // Check für japanische/chinesische Zeichen (Hack-Indikator)
+        // Check for Japanese/Chinese characters (hack indicator)
         if (preg_match('/[\x{4E00}-\x{9FBF}\x{3040}-\x{309F}\x{30A0}-\x{30FF}]/u', $title)) {
             return [
                 'type' => 'title_hijacked',
                 'severity' => 'critical',
-                'title' => 'Title möglicherweise gehackt',
-                'description' => 'Fremdsprachige Zeichen im Title gefunden: "' . mb_substr($title, 0, 50) . '..."',
-                'explanation' => 'Japanische oder chinesische Zeichen in einem deutschen Title deuten oft auf einen SEO-Spam-Hack hin.',
-                'recommendation' => 'Überprüfe sofort die Website auf Malware. Ändere alle Passwörter (FTP, CMS, Datenbank).',
+                'title' => 'Title possibly hijacked',
+                'description' => 'Foreign characters found in title: "' . mb_substr($title, 0, 50) . '..."',
+                'explanation' => 'Japanese or Chinese characters in an English title often indicate an SEO spam hack.',
+                'recommendation' => 'Check the website for malware immediately. Change all passwords (FTP, CMS, Database).',
             ];
         }
 
-        // Untitled oder Placeholder-Title
-        if (in_array(strtolower($title), ['untitled', 'home', 'willkommen', 'startseite', 'index'])) {
+        // Untitled or placeholder title
+        if (in_array(strtolower($title), ['untitled', 'home', 'welcome', 'startpage', 'index'])) {
             return [
                 'type' => 'generic_title',
                 'severity' => 'info',
-                'title' => 'Generischer Title',
-                'description' => 'Der Title "' . $title . '" ist nicht optimal.',
-                'explanation' => 'Generische Titles wie "Home" verschwenden SEO-Potenzial.',
-                'recommendation' => 'Verwende einen einzigartigen, beschreibenden Title mit relevanten Keywords.',
+                'title' => 'Generic title',
+                'description' => 'The title "' . $title . '" is not optimal.',
+                'explanation' => 'Generic titles like "Home" waste SEO potential.',
+                'recommendation' => 'Use a unique, descriptive title with relevant keywords.',
             ];
         }
 
@@ -233,28 +233,28 @@ class WatchdogService
         foreach ($this->spamKeywords as $category => $keywords) {
             foreach ($keywords as $keyword) {
                 if (str_contains($bodyLower, $keyword)) {
-                    // Kontext extrahieren (50 Zeichen vor und nach)
+                    // Extract context (50 characters before and after)
                     $pos = strpos($bodyLower, $keyword);
                     $start = max(0, $pos - 40);
                     $context = substr($bodyLower, $start, 100);
-                    $context = preg_replace('/\s+/', ' ', $context); // Whitespace normalisieren
+                    $context = preg_replace('/\s+/', ' ', $context); // Normalize whitespace
                     
                     $categoryNames = [
-                        'pharma' => 'Pharma-Spam',
-                        'gambling' => 'Glücksspiel-Spam',
-                        'adult' => 'Adult-Content',
-                        'counterfeit' => 'Fälschungs-Spam',
-                        'crypto_scam' => 'Krypto-Betrug',
+                        'pharma' => 'Pharma spam detected',
+                        'gambling' => 'Gambling spam detected',
+                        'adult' => 'Adult content detected',
+                        'counterfeit' => 'Counterfeit spam detected',
+                        'crypto_scam' => 'Crypto scam detected',
                     ];
 
                     $issues[] = [
                         'type' => 'spam_keyword',
                         'severity' => 'critical',
-                        'title' => $categoryNames[$category] . ' erkannt',
-                        'description' => 'Verdächtiges Keyword gefunden: "' . $keyword . '"',
+                        'title' => $categoryNames[$category],
+                        'description' => 'Suspicious keyword found: "' . $keyword . '"',
                         'context' => '..."' . trim($context) . '"...',
-                        'explanation' => 'Solche Keywords deuten auf eine gehackte Website oder SEO-Spam hin. Suchmaschinen können die Seite abstrafen.',
-                        'recommendation' => 'Durchsuche den Quellcode nach diesem Begriff. Prüfe, ob die Seite gehackt wurde. Scanne mit einem Malware-Scanner.',
+                        'explanation' => 'Such keywords indicate a hijacked website or SEO spam. Search engines may penalize the page.',
+                        'recommendation' => 'Search the source code for this term. Check if the page has been hijacked. Scan with a malware scanner.',
                     ];
                 }
             }
@@ -280,31 +280,31 @@ class WatchdogService
                 continue;
             }
 
-            // URL-Shortener erkennen
+            // Detect URL shorteners
             foreach (['bit.ly', 'tinyurl.com', 'goo.gl', 't.co', 'ow.ly'] as $shortener) {
                 if (str_contains($linkHost, $shortener)) {
                     $issues[] = [
                         'type' => 'url_shortener',
                         'severity' => 'warning',
-                        'title' => 'URL-Shortener gefunden',
-                        'description' => 'Link zu: ' . mb_substr($href, 0, 60),
-                        'explanation' => 'URL-Shortener verstecken das echte Ziel. Hacker nutzen sie, um verdächtige Links zu tarnen.',
-                        'recommendation' => 'Ersetze den Shortener durch den direkten Link oder entferne den Link, falls unbekannt.',
+                        'title' => 'URL shortener found',
+                        'description' => 'Link to: ' . mb_substr($href, 0, 60),
+                        'explanation' => 'URL shorteners hide the real destination. Hackers use them to disguise suspicious links.',
+                        'recommendation' => 'Replace the shortener with the direct link or remove the link if unknown.',
                     ];
                     continue 2;
                 }
             }
 
-            // Verdächtige TLDs
+            // Suspicious TLDs
             foreach (['.ru', '.cn', '.tk', '.ml', '.ga', '.cf'] as $tld) {
                 if (str_ends_with($linkHost, $tld)) {
                     $issues[] = [
                         'type' => 'suspicious_tld',
                         'severity' => 'warning',
-                        'title' => 'Link zu verdächtiger Domain',
-                        'description' => 'Externer Link zu: ' . $linkHost,
-                        'explanation' => 'Diese TLDs werden oft für Spam oder Phishing verwendet.',
-                        'recommendation' => 'Überprüfe, ob dieser Link von dir gewollt ist. Wenn nicht, wurde die Seite möglicherweise gehackt.',
+                        'title' => 'Link to suspicious domain',
+                        'description' => 'External link to: ' . $linkHost,
+                        'explanation' => 'These TLDs are often used for spam or phishing.',
+                        'recommendation' => 'Verify if this link is intentional. If not, the page may have been hijacked.',
                     ];
                     continue 2;
                 }
@@ -317,7 +317,7 @@ class WatchdogService
 
     private function checkHiddenContent(string $body): ?array
     {
-        // Suche nach display:none oder visibility:hidden mit Textinhalt
+        // Search for display:none or visibility:hidden with text content
         if (preg_match('/<[^>]+style=["\'][^"\']*(?:display:\s*none|visibility:\s*hidden)[^"\']*["\'][^>]*>([^<]{20,})/i', $body, $matches)) {
             $hiddenText = trim(strip_tags($matches[1]));
             $hiddenText = mb_substr($hiddenText, 0, 100);
@@ -325,10 +325,10 @@ class WatchdogService
             return [
                 'type' => 'hidden_content',
                 'severity' => 'critical',
-                'title' => 'Versteckter Content gefunden',
-                'description' => 'Text in verstecktem Element: "' . $hiddenText . '..."',
-                'explanation' => 'Versteckter Text ist eine Black-Hat-SEO-Technik. Suchmaschinen bestrafen dies mit Ranking-Verlust.',
-                'recommendation' => 'Entferne den versteckten Content. Prüfe, ob die Seite gehackt wurde.',
+                'title' => 'Hidden content found',
+                'description' => 'Text in hidden element: "' . $hiddenText . '..."',
+                'explanation' => 'Hidden text is a black-hat SEO technique. Search engines penalize this with ranking loss.',
+                'recommendation' => 'Remove the hidden content. Check if the page has been hijacked.',
             ];
         }
 
@@ -344,7 +344,7 @@ class WatchdogService
             $src = $node->attr('src');
             if (!$src) continue;
 
-            // Bekannte Safe-Domains
+            // Known safe domains
             $safeDomains = ['vimeo.com', 'facebook.com', 'twitter.com'];
             $isSafe = false;
             foreach ($safeDomains as $safe) {
@@ -358,10 +358,10 @@ class WatchdogService
                 $issues[] = [
                     'type' => 'suspicious_iframe',
                     'severity' => 'warning',
-                    'title' => 'Verdächtiger Iframe gefunden',
-                    'description' => 'Iframe lädt: ' . mb_substr($src, 0, 80),
-                    'explanation' => 'Unbekannte Iframes können Malware, Phishing-Seiten oder Tracking-Scripts laden.',
-                    'recommendation' => 'Prüfe, ob dieser Iframe gewollt ist. Entferne ihn, wenn du die Quelle nicht kennst.',
+                    'title' => 'Suspicious iframe found',
+                    'description' => 'Iframe loads: ' . mb_substr($src, 0, 80),
+                    'explanation' => 'Unknown iframes can load malware, phishing pages, or tracking scripts.',
+                    'recommendation' => 'Verify if this iframe is intentional. Remove it if you don\'t know the source.',
                 ];
             }
         }
@@ -380,10 +380,10 @@ class WatchdogService
             return [
                 'type' => 'meta_redirect',
                 'severity' => 'warning',
-                'title' => 'Meta-Refresh Redirect gefunden',
-                'description' => 'Redirect konfiguriert: ' . mb_substr($content, 0, 60),
-                'explanation' => 'Meta-Refresh Redirects sind veraltet und können für Cloaking missbraucht werden.',
-                'recommendation' => 'Ersetze Meta-Refresh durch einen serverseitigen 301-Redirect.',
+                'title' => 'Meta-refresh redirect found',
+                'description' => 'Redirect configured: ' . mb_substr($content, 0, 60),
+                'explanation' => 'Meta-refresh redirects are deprecated and can be abused for cloaking.',
+                'recommendation' => 'Replace meta-refresh with a server-side 301 redirect.',
             ];
         }
 
@@ -393,14 +393,14 @@ class WatchdogService
     private function checkSearchConsoleVerification(string $bodyLower): ?array
     {
         if (str_contains($bodyLower, 'search-engine-verification')) {
-            // Nur Info – das ist gut
+            // Info only – this is good
             return [
                 'type' => 'search_console_verification',
                 'severity' => 'info',
-                'title' => 'Search Console Verifizierung vorhanden',
-                'description' => 'Die Seite ist für die Search Console verifiziert.',
-                'explanation' => 'Das ist positiv und zeigt, dass der Betreiber Zugang zur Search Console hat.',
-                'recommendation' => 'Keine Aktion erforderlich.',
+                'title' => 'Search Console verification found',
+                'description' => 'The page is verified for Search Console.',
+                'explanation' => 'This is positive and indicates that the owner has access to Search Console.',
+                'recommendation' => 'No action required.',
             ];
         }
 
@@ -416,7 +416,7 @@ class WatchdogService
             $src = $node->attr('src');
             if (!$src) continue;
 
-            // Bekannte Safe-Domains (CDN/Social)
+            // Known safe domains (CDN/Social)
             $safeDomains = [
                 'cloudflare.com', 'jquery.com', 'jsdelivr.net', 'unpkg.com',
                 'facebook.net', 'twitter.com', 'stripe.com', 'paypal.com'
@@ -434,16 +434,16 @@ class WatchdogService
             }
 
             if (!$isSafe) {
-                // Verdächtige TLDs
+                // Suspicious TLDs
                 foreach (['.ru', '.cn', '.tk', '.ml', '.ga', '.cf'] as $tld) {
                     if (str_ends_with($host, $tld)) {
                         $issues[] = [
                             'type' => 'suspicious_script',
                             'severity' => 'critical',
-                            'title' => 'Verdächtiges externes Script',
-                            'description' => 'Script lädt von: ' . $host,
-                            'explanation' => 'Externe Scripts von verdächtigen Domains können Malware oder Cryptominer enthalten.',
-                            'recommendation' => 'Entferne dieses Script sofort, wenn du es nicht selbst eingebaut hast. Prüfe die Seite auf Hacks.',
+                            'title' => 'Suspicious external script',
+                            'description' => 'Script loads from: ' . $host,
+                            'explanation' => 'External scripts from suspicious domains can contain malware or cryptominers.',
+                            'recommendation' => 'Remove this script immediately if you didn\'t install it yourself. Check the page for hacks.',
                         ];
                         break;
                     }

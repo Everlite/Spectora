@@ -16,7 +16,7 @@
                             <span class="badge-error text-[10px]">● Offline</span>
                         @endif
                     </h2>
-                    <p class="text-muted text-sm mt-0.5">Letzte Prüfung: {{ $domain->updated_at->diffForHumans() }}</p>
+                    <p class="text-muted text-sm mt-0.5">Last Check: {{ $domain->updated_at->diffForHumans() }}</p>
                 </div>
             </div>
             
@@ -39,7 +39,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                         </svg>
                     </template>
-                    <span x-text="isAnalyzing ? 'Analysiere...' : 'Analysieren'"></span>
+                    <span x-text="isAnalyzing ? 'Analyzing...' : 'Analyze'"></span>
                 </button>
                 
                 <a href="{{ $domain->url }}" target="_blank"
@@ -47,7 +47,7 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                     </svg>
-                    Besuchen
+                    Visit
                 </a>
 
                 <!-- Tracking Code -->
@@ -80,13 +80,13 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span class="font-medium">Analyse erfolgreich! Seite lädt neu...</span>
+                    <span class="font-medium">Analysis successful! Reloading...</span>
                 </div>
                 <div x-show="analysisResult === 'error'" class="bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
-                    <span class="font-medium" x-text="'Fehler: ' + analysisError"></span>
+                    <span class="font-medium" x-text="'Error: ' + analysisError"></span>
                 </div>
             </div>
 
@@ -199,7 +199,7 @@
 
             @if (session('error'))
                 <div class="mb-4 bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-xl relative shadow-lg" role="alert">
-                    <strong class="font-bold">Fehler:</strong>
+                    <strong class="font-bold">Error:</strong>
                     <span class="block sm:inline">{{ session('error') }}</span>
                 </div>
             @endif
@@ -215,7 +215,7 @@
                         class="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                        Übersicht
+                        Overview
                     </button>
 
                     <button
@@ -237,7 +237,7 @@
                         class="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Historie
+                        History
                     </button>
 
                     <button
@@ -248,7 +248,7 @@
                         class="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                        Notizen
+                        Notes
                     </button>
 
                     <button
@@ -291,7 +291,7 @@
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-xs lg:text-sm font-medium text-slate-500 dark:text-gray-400">Performance</h3>
                             <span class="text-[10px] lg:text-xs px-2 py-1 rounded-full {{ $score >= 90 ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400' : ($score >= 50 ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400' : 'bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400') }}">
-                                {{ $score >= 90 ? 'Exzellent' : ($score >= 50 ? 'Mittel' : 'Kritisch') }}
+                                {{ $score >= 90 ? 'Excellent' : ($score >= 50 ? 'Average' : 'Critical') }}
                             </span>
                         </div>
                         <div class="flex items-baseline gap-1 mb-3">
@@ -303,8 +303,8 @@
                                 <canvas id="performanceSparkline" class="w-full h-full"></canvas>
                             </div>
                             <div class="flex justify-between text-[9px] lg:text-[10px] text-slate-400 dark:text-gray-500 mt-1">
-                                <span>7 Tage</span>
-                                <span>Heute</span>
+                                <span>7 Days</span>
+                                <span>Today</span>
                             </div>
                         </div>
                     </div>
@@ -313,7 +313,7 @@
                     <div class="bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-4">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-xs lg:text-sm font-medium text-slate-500 dark:text-gray-400">Uptime</h3>
-                            <span class="text-[10px] lg:text-xs px-2 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">30 Tage</span>
+                            <span class="text-[10px] lg:text-xs px-2 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">30 Days</span>
                         </div>
                         <div class="flex items-baseline gap-1 mb-3">
                             <span class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white">{{ $uptime }}</span>
@@ -324,8 +324,8 @@
                                 <canvas id="uptimeSparkline" class="w-full h-full"></canvas>
                             </div>
                             <div class="flex justify-between text-[9px] lg:text-[10px] text-slate-400 dark:text-gray-500 mt-1">
-                                <span>30 Tage</span>
-                                <span>Heute</span>
+                                <span>30 Days</span>
+                                <span>Today</span>
                             </div>
                         </div>
                     </div>
@@ -333,9 +333,9 @@
                     <!-- Response Time Card -->
                     <div class="bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-4">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-xs lg:text-sm font-medium text-slate-500 dark:text-gray-400">Antwortzeit</h3>
+                            <h3 class="text-xs lg:text-sm font-medium text-slate-500 dark:text-gray-400">Response Time</h3>
                             <span class="text-[10px] lg:text-xs px-2 py-1 rounded-full {{ $avgResponseTime < 300 ? 'bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-400' : 'bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400' }}">
-                                {{ $avgResponseTime < 300 ? 'Schnell' : 'Akzeptabel' }}
+                                {{ $avgResponseTime < 300 ? 'Fast' : 'Acceptable' }}
                             </span>
                         </div>
                         <div class="flex items-baseline gap-1 mb-3">
@@ -356,8 +356,8 @@
                                 <canvas id="responseSparkline" class="w-full h-full"></canvas>
                             </div>
                             <div class="flex justify-between text-[9px] lg:text-[10px] text-slate-400 dark:text-gray-500 mt-1">
-                                <span>7 Tage</span>
-                                <span>Heute</span>
+                                <span>7 Days</span>
+                                <span>Today</span>
                             </div>
                         </div>
                     </div>
@@ -366,14 +366,14 @@
                     <div class="bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-4">
                         <div>
                             <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-xs lg:text-sm font-medium text-slate-500 dark:text-gray-400">SSL Zertifikat</h3>
+                                <h3 class="text-xs lg:text-sm font-medium text-slate-500 dark:text-gray-400">SSL Certificate</h3>
                                 <svg class="w-4 h-4 lg:w-5 lg:h-5 {{ $sslDaysRemaining > 30 ? 'text-emerald-500' : ($sslDaysRemaining > 7 ? 'text-amber-500' : 'text-rose-500') }}" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                                 </svg>
                             </div>
                             <div class="flex items-baseline gap-1 mb-3">
                                 <span class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white">{{ $sslDaysRemaining }}</span>
-                                <span class="text-base lg:text-lg text-slate-400 dark:text-gray-500">Tage</span>
+                                <span class="text-base lg:text-lg text-slate-400 dark:text-gray-500">Days</span>
                             </div>
                         </div>
                         <div class="border-t border-slate-100 dark:border-gray-700 pt-2">
@@ -385,8 +385,8 @@
                                 </div>
                             </div>
                             <div class="flex justify-between text-[9px] lg:text-[10px] text-slate-400 dark:text-gray-500 mt-2">
-                                <span>0 Tage</span>
-                                <span>90 Tage</span>
+                                <span>0 Days</span>
+                                <span>90 Days</span>
                             </div>
                         </div>
                     </div>
@@ -398,8 +398,8 @@
                     <!-- Device Pie Chart (Left) -->
                     <div class="min-w-0 bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-4 lg:p-5">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-base font-semibold text-slate-800 dark:text-gray-100">Geräte</h3>
-                            <span class="text-xs text-slate-400 dark:text-gray-500">Letzte 30 Tage</span>
+                            <h3 class="text-base font-semibold text-slate-800 dark:text-gray-100">Devices</h3>
+                            <span class="text-xs text-slate-400 dark:text-gray-500">Last 30 Days</span>
                         </div>
                         <div class="flex items-center justify-center">
                             <div class="relative w-48 h-48 max-w-full">
@@ -435,16 +435,16 @@
                     <!-- Traffic Line Chart (Right) -->
                     <div class="min-w-0 bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-4 lg:p-5">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-base font-semibold text-slate-800 dark:text-gray-100">Traffic Übersicht</h3>
+                            <h3 class="text-base font-semibold text-slate-800 dark:text-gray-100">Traffic Overview</h3>
                             <div class="flex items-center gap-4 text-sm">
                                 <div class="flex items-center gap-2">
                                     <div class="w-3 h-3 rounded-full bg-violet-500"></div>
-                                    <span class="text-slate-500 dark:text-gray-400">Besucher</span>
+                                    <span class="text-slate-500 dark:text-gray-400">Visitors</span>
                                     <span class="font-semibold text-slate-800 dark:text-gray-200">{{ number_format(array_sum($chartVisitors)) }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <div class="w-3 h-3 rounded-full bg-cyan-500"></div>
-                                    <span class="text-slate-500 dark:text-gray-400">Aufrufe</span>
+                                    <span class="text-slate-500 dark:text-gray-400">Pageviews</span>
                                     <span class="font-semibold text-slate-800 dark:text-gray-200">{{ number_format(array_sum($chartPageviews)) }}</span>
                                 </div>
                             </div>
@@ -461,8 +461,8 @@
                      class="card-base p-4 flex items-center gap-3 cursor-pointer transition-all duration-200 bg-rose-50 dark:bg-red-500/10 border-rose-200 dark:border-red-500/30 hover:bg-rose-100 dark:hover:bg-red-500/20 hover:border-rose-300 dark:hover:border-red-500/50 hover:shadow-lg dark:hover:shadow-red-500/20 group">
                     <svg class="w-6 h-6 text-rose-600 dark:text-red-400 flex-shrink-0 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                     <div class="flex-1">
-                        <span class="font-bold text-rose-700 dark:text-red-400 group-hover:text-rose-800 dark:group-hover:text-red-300">{{ $criticalCount + $warningCount }} Sicherheitsprobleme gefunden</span>
-                        <span class="text-sm ml-2 text-slate-600 dark:text-gray-400 group-hover:underline">→ Klick für Details</span>
+                        <span class="font-bold text-rose-700 dark:text-red-400 group-hover:text-rose-800 dark:group-hover:text-red-300">{{ $criticalCount + $warningCount }} security issues found</span>
+                        <span class="text-sm ml-2 text-slate-600 dark:text-gray-400 group-hover:underline">→ Click for details</span>
                     </div>
                     <svg class="w-5 h-5 text-slate-400 dark:text-gray-500 group-hover:text-rose-600 dark:group-hover:text-red-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </div>
@@ -477,11 +477,11 @@
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                             </div>
                             <div>
-                                <h3 class="font-bold text-slate-800 dark:text-white">Überwachte Pfade</h3>
-                                <p class="text-xs text-slate-500 dark:text-gray-400">Aktueller Status deiner Unterseiten</p>
+                                <h3 class="font-bold text-slate-800 dark:text-white">Monitored Paths</h3>
+                                <p class="text-xs text-slate-500 dark:text-gray-400">Current status of your subpages</p>
                             </div>
                         </div>
-                        <button @click="tab = 'monitoring'" class="text-xs font-bold text-violet-600 dark:text-violet-400 hover:underline">Alle verwalten →</button>
+                        <button @click="tab = 'monitoring'" class="text-xs font-bold text-violet-600 dark:text-violet-400 hover:underline">Manage all →</button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -522,8 +522,8 @@
                     $categories = [
                         'performance' => ['name' => 'Performance', 'icon' => '⚡', 'color' => '#f97316'],
                         'seo' => ['name' => 'SEO', 'icon' => '🔍', 'color' => '#8b5cf6'],
-                        'accessibility' => ['name' => 'Barrierefreiheit', 'icon' => '♿', 'color' => '#06b6d4'],
-                        'security' => ['name' => 'Sicherheit', 'icon' => '🔒', 'color' => '#22c55e'],
+                        'accessibility' => ['name' => 'Accessibility', 'icon' => '♿', 'color' => '#06b6d4'],
+                        'security' => ['name' => 'Security', 'icon' => '🔒', 'color' => '#22c55e'],
                     ];
                     $groupedAudits = collect($auditDetails)->groupBy('category');
                     $passedCount = collect($auditDetails)->where('status', 'success')->count();
@@ -541,9 +541,9 @@
                                 Website Audit
                             </h3>
                             <div class="flex items-center gap-3 text-sm">
-                                <span class="px-3 py-1 rounded-full bg-emerald-100 dark:bg-green-500/15 text-emerald-700 dark:text-green-400">✓ {{ $passedCount }} bestanden</span>
+                                <span class="px-3 py-1 rounded-full bg-emerald-100 dark:bg-green-500/15 text-emerald-700 dark:text-green-400">✓ {{ $passedCount }} passed</span>
                                 @if($failedCount > 0)
-                                    <span class="px-3 py-1 rounded-full bg-rose-100 dark:bg-red-500/15 text-rose-700 dark:text-red-400">✗ {{ $failedCount }} Probleme</span>
+                                    <span class="px-3 py-1 rounded-full bg-rose-100 dark:bg-red-500/15 text-rose-700 dark:text-red-400">✗ {{ $failedCount }} issues</span>
                                 @endif
                             </div>
                         </div>
@@ -610,8 +610,8 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-primary font-bold text-lg">Traffic Übersicht</h3>
-                                    <p class="text-muted text-xs group-hover:text-violet-600 dark:group-hover:text-cyan-400 transition-colors">Klicken für Details →</p>
+                                    <h3 class="text-primary font-bold text-lg">Traffic Overview</h3>
+                                    <p class="text-muted text-xs group-hover:text-violet-600 dark:group-hover:text-cyan-400 transition-colors">Click for details →</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-6 text-sm">
@@ -630,7 +630,7 @@
                         <div class="h-72 md:h-80 w-full">
                             <canvas id="overviewChart"></canvas>
                         </div>
-                        <p class="text-muted text-xs text-center mt-4">Letzte 30 Tage</p>
+                        <p class="text-muted text-xs text-center mt-4">Last 30 Days</p>
                 </div>
 
             </div>
@@ -650,15 +650,15 @@
                                     @endif
                                 </div>
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                    <h3 class="text-lg font-bold text-white">Sicherheitsreport</h3>
+                                    <h3 class="text-lg font-bold text-white">Security Report</h3>
                                     
                                     @if($criticalCount > 0 || $warningCount > 0)
                                         <div class="flex gap-2 mt-2 text-xs">
                                             @if($criticalCount > 0)
-                                                <span class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">{{ $criticalCount }} Kritisch</span>
+                                                <span class="px-2 py-1 rounded bg-red-500/20 text-red-400 font-bold">{{ $criticalCount }} Critical</span>
                                             @endif
                                             @if($warningCount > 0)
-                                                <span class="px-2 py-1 rounded bg-orange-500/20 text-orange-400 font-bold">{{ $warningCount }} Warnungen</span>
+                                                <span class="px-2 py-1 rounded bg-orange-500/20 text-orange-400 font-bold">{{ $warningCount }} Warnings</span>
                                             @endif
                                         </div>
                                     @endif
@@ -676,7 +676,7 @@
                                                 @endphp
                                                 <div class="{{ $colors['bg'] }} {{ $colors['border'] }} border rounded-lg p-4">
                                                     <div class="flex items-center gap-2 mb-1">
-                                                        <h4 class="font-bold text-white text-sm">{{ $issue['title'] ?? 'Problem' }}</h4>
+                                                        <h4 class="font-bold text-white text-sm">{{ $issue['title'] ?? 'Issue' }}</h4>
                                                         <span class="text-[10px] px-1.5 py-0.5 rounded {{ $colors['badge'] }} uppercase font-bold">{{ $severity }}</span>
                                                     </div>
                                                     <p class="text-gray-300 text-sm">{{ $issue['description'] ?? '' }}</p>
@@ -691,8 +691,8 @@
                                         @else
                                             <div class="text-center py-8">
                                                 <svg class="w-12 h-12 mx-auto text-green-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                                                <p class="text-green-400 font-bold">Alles sicher!</p>
-                                                <p class="text-gray-500 text-sm mt-1">Keine Sicherheitsprobleme gefunden.</p>
+                                                <p class="text-green-400 font-bold">All safe!</p>
+                                                <p class="text-gray-500 text-sm mt-1">No security issues found.</p>
                                             </div>
                                         @endif
                                     </div>
@@ -700,7 +700,7 @@
                             </div>
                         </div>
                         <div class="bg-gray-800/50 px-5 py-3 sm:flex sm:flex-row-reverse border-t border-gray-700">
-                            <button type="button" @click="showSecurityModal = false" class="w-full inline-flex justify-center rounded-lg px-4 py-2 bg-spectora-cyan text-gray-900 text-sm font-bold hover:bg-cyan-400 transition sm:w-auto">Schließen</button>
+                            <button type="button" @click="showSecurityModal = false" class="w-full inline-flex justify-center rounded-lg px-4 py-2 bg-spectora-cyan text-gray-900 text-sm font-bold hover:bg-cyan-400 transition sm:w-auto">Close</button>
                         </div>
                     </div>
                 </div>
@@ -724,7 +724,7 @@
                         <div class="bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-6">
                             <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
-                                Smart Monitoring Filter
+                                Smart Monitoring Filters
                             </h3>
                             
                             <div class="space-y-4">
@@ -735,8 +735,8 @@
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                                         </div>
                                         <div>
-                                            <p class="font-semibold text-slate-800 dark:text-gray-200">Nur öffentliche Seiten</p>
-                                            <p class="text-xs text-slate-500 dark:text-gray-400">Überspringt Login-Bereiche und geschützte Inhalte automatisch.</p>
+                                            <p class="font-semibold text-slate-800 dark:text-gray-200">Only public pages</p>
+                                            <p class="text-xs text-slate-500 dark:text-gray-400">Automatically skips login areas and protected content.</p>
                                         </div>
                                     </div>
                                     <input type="checkbox" x-model="settings.only_check_public_pages" class="w-5 h-5 rounded border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-violet-600 focus:ring-violet-500">
@@ -749,8 +749,8 @@
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                         </div>
                                         <div>
-                                            <p class="font-semibold text-slate-800 dark:text-gray-200">Robots.txt beachten</p>
-                                            <p class="text-xs text-slate-500 dark:text-gray-400">Folgt den Anweisungen in der robots.txt (User-Agent: SpectoraBot).</p>
+                                            <p class="font-semibold text-slate-800 dark:text-gray-200">Respect robots.txt</p>
+                                            <p class="text-xs text-slate-500 dark:text-gray-400">Follows the instructions in robots.txt (User-Agent: SpectoraBot).</p>
                                         </div>
                                     </div>
                                     <input type="checkbox" x-model="settings.respect_robots_txt" class="w-5 h-5 rounded border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-violet-600 focus:ring-violet-500">
@@ -763,8 +763,8 @@
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
                                         </div>
                                         <div>
-                                            <p class="font-semibold text-slate-800 dark:text-gray-200">Noindex befürdern</p>
-                                            <p class="text-xs text-slate-500 dark:text-gray-400">Ignoriert Seiten mit "noindex" Meta-Tag oder HTTP-Header.</p>
+                                            <p class="font-semibold text-slate-800 dark:text-gray-200">Respect noindex</p>
+                                            <p class="text-xs text-slate-500 dark:text-gray-400">Ignores pages with "noindex" meta tag or HTTP header.</p>
                                         </div>
                                     </div>
                                     <input type="checkbox" x-model="settings.respect_noindex" class="w-5 h-5 rounded border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-violet-600 focus:ring-violet-500">
@@ -776,9 +776,9 @@
                         <div class="bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-6">
                             <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
-                                URL-Ausschlussmuster
+                                URL Exclusion Patterns
                             </h3>
-                            <p class="text-sm text-slate-500 dark:text-gray-400 mb-4">Ein Muster pro Zeile. Nutze * als Platzhalter (z.B. <code>*/downloads/*</code>).</p>
+                            <p class="text-sm text-slate-500 dark:text-gray-400 mb-4">One pattern per line. Use * as a wildcard (e.g. <code>*/downloads/*</code>).</p>
                             <textarea 
                                 x-model="settings.exclude_patterns"
                                 rows="5"
@@ -790,7 +790,7 @@
                                     <template x-if="isSaving">
                                         <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                     </template>
-                                    <span x-text="isSaving ? 'Speichere...' : 'Einstellungen speichern'"></span>
+                                    <span x-text="isSaving ? 'Saving...' : 'Save settings'"></span>
                                 </button>
                             </div>
                         </div>
@@ -809,7 +809,7 @@
                                     <template x-if="isDetecting">
                                         <svg class="animate-spin h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                     </template>
-                                    <span x-text="isDetecting ? 'Suche...' : 'Sitemaps automatisch suchen'"></span>
+                                    <span x-text="isDetecting ? 'Searching...' : 'Search sitemaps automatically'"></span>
                                 </button>
                             </div>
                             <div class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
@@ -820,7 +820,7 @@
                                     </label>
                                 </template>
                                 <template x-if="sitemap_urls.length === 0">
-                                    <p class="text-center py-4 text-xs text-slate-400 italic">Keine Sitemaps gefunden.</p>
+                                    <p class="text-center py-4 text-xs text-slate-400 italic">No sitemaps found.</p>
                                 </template>
                             </div>
                         </div>
@@ -829,7 +829,7 @@
                         <div class="bg-white dark:bg-gray-800 border border-slate-300 dark:border-gray-600 rounded-xl shadow-sm p-6">
                             <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                                Überwachte URLs
+                                Monitored URLs
                             </h3>
                             
                             <div class="mb-4">
@@ -847,12 +847,12 @@
                                         </div>
                                         <div class="flex items-center gap-2 ml-4">
                                             <span x-show="url.is_active" class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
-                                            <span x-text="url.is_active ? 'Aktiv' : 'Inaktiv'" class="text-[10px] text-slate-500"></span>
+                                            <span x-text="url.is_active ? 'Active' : 'Inactive'" class="text-[10px] text-slate-500"></span>
                                         </div>
                                     </div>
                                 </template>
                                 <template x-if="monitoredUrls.length === 0">
-                                    <p class="text-center py-4 text-xs text-slate-400 italic">Noch keine zusätzlichen URLs ausgewählt.</p>
+                                    <p class="text-center py-4 text-xs text-slate-400 italic">No additional URLs selected yet.</p>
                                 </template>
                             </div>
                         </div>
@@ -879,7 +879,7 @@
 
                         <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border border-slate-200 dark:border-gray-700">
                             <div class="px-6 py-4 border-b border-slate-100 dark:border-gray-700 flex justify-between items-center">
-                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">URLs zum Überwachen auswählen</h3>
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Select URLs to monitor</h3>
                                 <button @click="showUrlModal = false" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l18 18"></path></svg>
                                 </button>
@@ -888,12 +888,12 @@
                             <div class="p-6">
                                 <div class="mb-6 flex items-center justify-between">
                                     <div class="text-sm text-slate-500 dark:text-gray-400">
-                                        Scanne Sitemaps und Homepage nach Links...
+                                        Scanning sitemaps and homepage for links...
                                     </div>
                                     <div class="flex gap-2">
-                                        <button @click="selectPublicOnly()" class="text-xs font-bold text-violet-600 dark:text-violet-400 hover:underline">Nur öffentliche wählen</button>
+                                        <button @click="selectPublicOnly()" class="text-xs font-bold text-violet-600 dark:text-violet-400 hover:underline">Select public only</button>
                                         <span class="text-slate-300 dark:text-gray-600">|</span>
-                                        <button @click="toggleAllUrls()" class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:underline" x-text="allSelected ? 'Alle abwählen' : 'Alle wählen'"></button>
+                                        <button @click="toggleAllUrls()" class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:underline" x-text="allSelected ? 'Deselect all' : 'Select all'"></button>
                                     </div>
                                 </div>
 
@@ -904,7 +904,7 @@
                                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            <p class="text-slate-500">Analysiere Domain-Struktur...</p>
+                                            <p class="text-slate-500">Analyzing domain structure...</p>
                                         </div>
                                     </template>
 
@@ -915,10 +915,10 @@
                                                 <p class="text-xs font-mono text-slate-700 dark:text-gray-300 truncate" x-text="item.url"></p>
                                                 <div class="flex items-center gap-2 mt-1">
                                                     <template x-if="item.is_public">
-                                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">ÖFFENTLICH</span>
+                                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">PUBLIC</span>
                                                     </template>
                                                     <template x-if="!item.is_public">
-                                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400" :title="item.skip_reason">PRIVAT/GESPERRT</span>
+                                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400" :title="item.skip_reason">PRIVATE/LOCKED</span>
                                                     </template>
                                                 </div>
                                             </div>
@@ -928,19 +928,19 @@
                                     <template x-if="discoveredUrls.length === 0 && !isScanningUrls">
                                         <div class="py-12 text-center text-slate-400 text-sm">
                                             <svg class="w-12 h-12 mx-auto mb-3 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M12 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                            Keine URLs gefunden. Versuche es mit anderen Sitemap-Einstellungen.
+                                            No URLs found. Try different sitemap settings.
                                         </div>
                                     </template>
                                 </div>
                             </div>
 
                             <div class="px-6 py-4 bg-slate-50 dark:bg-gray-900/50 border-t border-slate-100 dark:border-gray-700 flex justify-end gap-3">
-                                <button @click="showUrlModal = false" class="px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition">Abbrechen</button>
+                                <button @click="showUrlModal = false" class="px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition">Cancel</button>
                                 <button @click="saveUrlSelection()" class="btn-primary" :disabled="isSyncingUrls">
                                     <template x-if="isSyncingUrls">
                                         <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                     </template>
-                                    <span x-text="isSyncingUrls ? 'Speichere...' : 'Auswahl speichern'"></span>
+                                    <span x-text="isSyncingUrls ? 'Saving...' : 'Save selection'"></span>
                                 </button>
                             </div>
                         </div>
@@ -1029,14 +1029,14 @@
                             <div class="bg-spectora-card border border-gray-700/50 rounded-xl p-6 shadow-xl">
                                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                                     <div>
-                                        <h3 class="text-lg font-bold text-white">Spectora Analyse</h3>
+                                        <h3 class="text-lg font-bold text-white">Spectora Analysis</h3>
                                         <p class="text-sm text-gray-400">Performance, Security & SEO Check</p>
                                     </div>
                                     <div class="flex items-center gap-3">
                                         <!-- Last Analysis Time -->
                                         @if($domain->updated_at)
                                             <span class="text-xs text-gray-500">
-                                                Letzte Analyse: {{ $domain->updated_at->diffForHumans() }}
+                                                Last Analysis: {{ $domain->updated_at->diffForHumans() }}
                                             </span>
                                         @endif
                                         
@@ -1052,14 +1052,14 @@
                                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
                                             </template>
-                                            <span x-text="isAnalyzing ? 'Analysiere...' : 'Analyse starten'"></span>
+                                            <span x-text="isAnalyzing ? 'Analyzing...' : 'Start analysis'"></span>
                                         </button>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-4">
                                     <p class="text-[10px] text-gray-500 italic bg-gray-800/30 p-2 rounded border border-gray-700/50 inline-block">
-                                        <span class="text-spectora-cyan font-bold">Hinweis:</span> Performance-Scan läuft lokal im Container – kann 30-60s dauern.
+                                        <span class="text-spectora-cyan font-bold">Note:</span> Performance scan runs locally in a container – may take 30-60s.
                                     </p>
                                 </div>
                                 
@@ -1070,8 +1070,8 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                         </svg>
                                         <div>
-                                            <p class="text-green-400 font-bold text-sm">Analyse erfolgreich!</p>
-                                            <p class="text-green-300/70 text-xs">Die Seite wird in Kürze aktualisiert...</p>
+                                            <p class="text-green-400 font-bold text-sm">Analysis successful!</p>
+                                            <p class="text-green-300/70 text-xs">The page will be updated shortly...</p>
                                         </div>
                                     </div>
                                     <div x-show="analysisResult === 'error'" class="bg-red-500/10 border border-red-500/30 rounded-lg p-4 flex items-center gap-3">
@@ -1079,7 +1079,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
                                         <div>
-                                            <p class="text-red-400 font-bold text-sm">Analyse fehlgeschlagen</p>
+                                            <p class="text-red-400 font-bold text-sm">Analysis failed</p>
                                             <p class="text-red-300/70 text-xs" x-text="analysisError"></p>
                                         </div>
                                     </div>
@@ -1118,8 +1118,8 @@
                                         <svg class="w-12 h-12 mx-auto text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                         </svg>
-                                        <p class="text-gray-500 italic">Noch keine Analyse durchgeführt.</p>
-                                        <p class="text-gray-600 text-sm mt-1">Klicke "Analyse starten" für einen detaillierten Report.</p>
+                                        <p class="text-gray-500 italic">No analysis performed yet.</p>
+                                        <p class="text-gray-600 text-sm mt-1">Click "Start analysis" for a detailed report.</p>
                                     </div>
                                 @endif
                             </div>
@@ -1128,8 +1128,8 @@
                             <div class="bg-spectora-card border border-gray-700/50 rounded-xl p-6 shadow-xl">
                                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                                     <div>
-                                        <h3 class="text-lg font-bold text-white">Ereignis-Log</h3>
-                                        <p class="text-sm text-gray-400">Probleme und Statusänderungen</p>
+                                        <h3 class="text-lg font-bold text-white">Event Log</h3>
+                                        <p class="text-sm text-gray-400">Issues and status changes</p>
                                     </div>
                                     
                                     <!-- Filter Toggle -->
@@ -1137,13 +1137,13 @@
                                         <label class="flex items-center gap-2 cursor-pointer">
                                             <input type="checkbox" x-model="showAllLogs" class="sr-only peer">
                                             <div class="relative w-10 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-400 after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-spectora-cyan"></div>
-                                            <span class="text-sm text-gray-400">Alle anzeigen</span>
+                                            <span class="text-sm text-gray-400">Show all</span>
                                         </label>
                                     </div>
                                 </div>
                                 
                                 @php
-                                    // Filter nur Probleme (Status >= 400 oder 0)
+                                    // Filter only issues (Status >= 400 or 0)
                                     $issueChecks = $recentChecks->filter(function($check) {
                                         return $check->status_code >= 400 || $check->status_code === 0 || $check->status_code === null;
                                     });
@@ -1156,10 +1156,10 @@
                                             <table class="w-full text-left">
                                                 <thead>
                                                     <tr class="text-gray-500 text-xs uppercase tracking-wider border-b border-gray-700">
-                                                        <th class="pb-3">Zeit</th>
+                                                        <th class="pb-3">Time</th>
                                                         <th class="pb-3">Status</th>
-                                                        <th class="pb-3">Antwortzeit</th>
-                                                        <th class="pb-3">Fehlermeldung</th>
+                                                        <th class="pb-3">Response time</th>
+                                                        <th class="pb-3">Error message</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="divide-y divide-gray-700/50">
@@ -1169,7 +1169,7 @@
                                                                 {{ $check->created_at->format('d.m.Y H:i:s') }}</td>
                                                             <td class="py-3">
                                                                 <span class="px-2 py-0.5 rounded text-xs font-bold bg-red-500/20 text-red-400">
-                                                                    {{ $check->status_code ?: 'FEHLER' }}
+                                                                    {{ $check->status_code ?: 'ERROR' }}
                                                                 </span>
                                                             </td>
                                                             <td class="py-3 text-gray-300 text-sm font-mono">
@@ -1184,7 +1184,7 @@
                                                                 @endif
                                                             </td>
                                                             <td class="py-3 text-red-400 text-xs truncate max-w-[100px] sm:max-w-xs">
-                                                                {{ $check->error_message ?? 'Verbindungsfehler' }}</td>
+                                                                {{ $check->error_message ?? 'Connection error' }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -1194,8 +1194,8 @@
                                                 <svg class="w-16 h-16 mx-auto text-green-500/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
-                                                <p class="text-green-400 font-bold text-lg">Keine Probleme!</p>
-                                                <p class="text-gray-500 text-sm mt-1">Es wurden keine Ausfälle oder Fehler aufgezeichnet.</p>
+                                                <p class="text-green-400 font-bold text-lg">No issues!</p>
+                                                <p class="text-gray-500 text-sm mt-1">No outages or errors recorded.</p>
                                             </div>
                                         @endif
                                     </div>
@@ -1205,10 +1205,10 @@
                                         <table class="w-full text-left">
                                             <thead>
                                                 <tr class="text-gray-500 text-xs uppercase tracking-wider border-b border-gray-700">
-                                                    <th class="pb-3">Zeit</th>
+                                                    <th class="pb-3">Time</th>
                                                     <th class="pb-3">Status</th>
-                                                    <th class="pb-3">Antwortzeit</th>
-                                                    <th class="pb-3">Meldung</th>
+                                                    <th class="pb-3">Response time</th>
+                                                    <th class="pb-3">Message</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="divide-y divide-gray-700/50">
@@ -1375,7 +1375,7 @@
                         } else {
                             this.analysisResult = 'error';
                             const data = await response.json().catch(() => ({}));
-                            this.analysisError = data.message || 'Ein Fehler ist aufgetreten.';
+                            this.analysisError = data.message || 'An error occurred.';
                             setTimeout(() => { this.analysisResult = null; }, 5000);
                         }
                     } catch (e) {
@@ -1494,7 +1494,7 @@
                         data: {
                             labels: @json($chartLabels),
                             datasets: [{
-                                    label: 'Besucher',
+                                    label: 'Visitors',
                                     data: @json($chartVisitors),
                                     borderColor: '#8b5cf6',
                                     backgroundColor: 'rgba(139, 92, 246, 0.1)',
@@ -1505,7 +1505,7 @@
                                     pointHoverRadius: 4
                                 },
                                 {
-                                    label: 'Aufrufe',
+                                    label: 'Pageviews',
                                     data: @json($chartPageviews),
                                     borderColor: '#06b6d4',
                                     backgroundColor: 'rgba(6, 182, 212, 0.05)',
@@ -1603,11 +1603,11 @@
                         } else {
                             this.analysisResult = 'error';
                             const data = await response.json().catch(() => ({}));
-                            this.analysisError = data.message || 'Ein unbekannter Fehler ist aufgetreten.';
+                            this.analysisError = data.message || 'An unknown error occurred.';
                         }
                     } catch (e) {
                         this.analysisResult = 'error';
-                        this.analysisError = 'Netzwerkfehler: ' + e.message;
+                        this.analysisError = 'Network error: ' + e.message;
                     } finally {
                         this.isAnalyzing = false;
                     }
@@ -1762,7 +1762,7 @@
                             // Show success state briefly then reload
                             const btn = event.target.closest('button');
                             const originalText = btn.innerText;
-                            btn.innerText = 'Gespeichert!';
+                            btn.innerText = 'Saved!';
                             btn.classList.add('bg-emerald-600');
                             
                             setTimeout(() => {

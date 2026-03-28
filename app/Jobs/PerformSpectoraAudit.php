@@ -83,16 +83,16 @@ class PerformSpectoraAudit implements ShouldQueue
                 $score -= 10;
                 $details[] = [
                     'category' => 'performance',
-                    'label' => 'Server-Antwortzeit (TTFB)',
+                    'label' => 'Server response time (TTFB)',
                     'status' => 'error',
-                    'message' => 'Der Server antwortet langsam (' . round($ttfbMs) . 'ms). Ziel: < 500ms.'
+                    'message' => 'The server is responding slowly (' . round($ttfbMs) . 'ms). Target: < 500ms.'
                 ];
             } else {
                 $details[] = [
                     'category' => 'performance',
-                    'label' => 'Server-Antwortzeit (TTFB)',
+                    'label' => 'Server response time (TTFB)',
                     'status' => 'success',
-                    'message' => 'Schnelle Antwortzeit (' . round($ttfbMs) . 'ms).'
+                    'message' => 'Fast response time (' . round($ttfbMs) . 'ms).'
                 ];
             }
 
@@ -101,16 +101,16 @@ class PerformSpectoraAudit implements ShouldQueue
                 $score -= 10;
                 $details[] = [
                     'category' => 'performance',
-                    'label' => 'Seitengröße',
+                    'label' => 'Page size',
                     'status' => 'error',
-                    'message' => 'Die HTML-Größe ist sehr groß (' . round($sizeBytes / 1024 / 1024, 2) . ' MB).'
+                    'message' => 'The HTML size is very large (' . round($sizeBytes / 1024 / 1024, 2) . ' MB).'
                 ];
             } else {
                 $details[] = [
                     'category' => 'performance',
-                    'label' => 'Seitengröße',
+                    'label' => 'Page size',
                     'status' => 'success',
-                    'message' => 'HTML-Größe ist optimal (' . round($sizeBytes / 1024) . ' KB).'
+                    'message' => 'HTML size is optimal (' . round($sizeBytes / 1024) . ' KB).'
                 ];
             }
 
@@ -121,16 +121,16 @@ class PerformSpectoraAudit implements ShouldQueue
                 $score -= 10;
                 $details[] = [
                     'category' => 'seo',
-                    'label' => 'H1 Überschrift',
+                    'label' => 'H1 heading',
                     'status' => 'error',
-                    'message' => 'Keine H1-Überschrift gefunden.'
+                    'message' => 'No H1 heading found.'
                 ];
             } else {
                 $details[] = [
                     'category' => 'seo',
-                    'label' => 'H1 Überschrift',
+                    'label' => 'H1 heading',
                     'status' => 'success',
-                    'message' => "H1 gefunden ($h1Count)."
+                    'message' => "H1 found ($h1Count)."
                 ];
             }
 
@@ -140,16 +140,16 @@ class PerformSpectoraAudit implements ShouldQueue
                 $score -= 10;
                 $details[] = [
                     'category' => 'seo',
-                    'label' => 'Seitentitel',
+                    'label' => 'Page title',
                     'status' => 'error',
-                    'message' => 'Der <title> Tag fehlt oder ist leer.'
+                    'message' => 'The <title> tag is missing or empty.'
                 ];
             } else {
                 $details[] = [
                     'category' => 'seo',
-                    'label' => 'Seitentitel',
+                    'label' => 'Page title',
                     'status' => 'success',
-                    'message' => 'Titel vorhanden.'
+                    'message' => 'Title present.'
                 ];
             }
 
@@ -162,16 +162,16 @@ class PerformSpectoraAudit implements ShouldQueue
                 $score -= 5;
                 $details[] = [
                     'category' => 'seo',
-                    'label' => 'Meta-Description',
+                    'label' => 'Meta description',
                     'status' => 'warning',
-                    'message' => 'Keine Meta-Description gefunden.'
+                    'message' => 'No meta description found.'
                 ];
             } else {
                 $details[] = [
                     'category' => 'seo',
-                    'label' => 'Meta-Description',
+                    'label' => 'Meta description',
                     'status' => 'success',
-                    'message' => 'Meta-Description vorhanden.'
+                    'message' => 'Meta description present.'
                 ];
             }
 
@@ -184,16 +184,16 @@ class PerformSpectoraAudit implements ShouldQueue
                 $score -= 5;
                 $details[] = [
                     'category' => 'accessibility',
-                    'label' => 'Bilder-Alt-Texte',
+                    'label' => 'Image alt texts',
                     'status' => 'warning',
-                    'message' => "$imagesWithoutAlt Bilder haben kein Alt-Attribut."
+                    'message' => "$imagesWithoutAlt images have no alt attribute."
                 ];
             } else {
                 $details[] = [
                     'category' => 'accessibility',
-                    'label' => 'Bilder-Alt-Texte',
+                    'label' => 'Image alt texts',
                     'status' => 'success',
-                    'message' => 'Alle Bilder haben Alt-Attribute.'
+                    'message' => 'All images have alt attributes.'
                 ];
             }
 
@@ -203,16 +203,16 @@ class PerformSpectoraAudit implements ShouldQueue
                 $score -= 20;
                 $details[] = [
                     'category' => 'security',
-                    'label' => 'HTTPS Verschlüsselung',
+                    'label' => 'HTTPS encryption',
                     'status' => 'error',
-                    'message' => 'Die Seite nutzt kein HTTPS.'
+                    'message' => 'The page does not use HTTPS.'
                 ];
             } else {
                 $details[] = [
                     'category' => 'security',
-                    'label' => 'HTTPS Verschlüsselung',
+                    'label' => 'HTTPS encryption',
                     'status' => 'success',
-                    'message' => 'HTTPS ist aktiv.'
+                    'message' => 'HTTPS is active.'
                 ];
             }
 

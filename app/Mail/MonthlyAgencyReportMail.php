@@ -34,7 +34,7 @@ class MonthlyAgencyReportMail extends Mailable
         $month = now()->subMonth()->translatedFormat('F');
         return new Envelope(
             from: new \Illuminate\Mail\Mailables\Address(config('mail.from.address'), 'Spectora Monitoring'),
-            subject: "Dein Monatsbericht für {$month}: {$this->stats['total']} Domains geprüft",
+            subject: "Your Monthly Report for {$month}: {$this->stats['total']} Domains Checked",
         );
     }
 

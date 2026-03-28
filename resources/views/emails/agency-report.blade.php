@@ -23,18 +23,18 @@
 </head>
 <body>
     <div class="container">
-        <h2>Hallo {{ $domain->user->first_name ?? 'Partner' }},</h2>
+        <h2>Hello {{ $domain->user->first_name ?? 'Partner' }},</h2>
         
-        <p>Der monatliche Sicherheits-Check für <strong>{{ $domain->url }}</strong> ist abgeschlossen.</p>
+        <p>The monthly security check for <strong>{{ $domain->url }}</strong> has been completed.</p>
         
         <div class="stats">
-            <p><strong>Aktueller Sicherheits-Status:</strong> {{ ucfirst($domain->safety_status ?? 'Unbekannt') }}</p>
-            <p><strong>Besucher letzten Monat:</strong> {{ $visitorsCount }}</p>
+            <p><strong>Current Security Status:</strong> {{ ucfirst($domain->safety_status ?? 'Unknown') }}</p>
+            <p><strong>Visitors last month:</strong> {{ $visitorsCount }}</p>
         </div>
         
-        <p>Anbei findest du das detaillierte PDF für deine Unterlagen oder zum Weiterleiten an den Kunden.</p>
+        <p>Attached you will find the detailed PDF for your records or to forward to the client.</p>
         
-        <p>Beste Grüße,<br>Dein Monitoring Team</p>
+        <p>Best regards,<br>Your Monitoring Team</p>
     </div>
 </body>
 </html>

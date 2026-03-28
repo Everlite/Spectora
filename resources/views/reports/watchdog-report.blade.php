@@ -32,10 +32,10 @@
                 <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-2">
                         <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                        <h4 class="font-bold text-gray-100 text-lg">Gefundene Fehlerwörter</h4>
+                        <h4 class="font-bold text-gray-100 text-lg">Detected Problem Keywords</h4>
                     </div>
                 </div>
-                <p class="text-gray-300 text-sm mb-3">Die folgenden explizit als Fehler definierten Wörter wurden auf der Website gefunden:</p>
+                <p class="text-gray-300 text-sm mb-3">The following words, explicitly defined as errors, were found on the website:</p>
                 <div class="flex flex-wrap gap-2">
                     <template x-for="keyword in statusDetails.keywords_found">
                         <span class="px-2 py-1 bg-gray-950 border border-red-700 text-red-300 rounded text-xs font-mono shadow-inner" x-text="keyword"></span>
@@ -86,7 +86,7 @@
                             </div>
                             
                             <!-- Dismiss Button -->
-                            <button @click="wdDismiss(issue)" class="text-gray-500 hover:text-white bg-gray-800/50 hover:bg-gray-700 transition-colors p-1.5 rounded-lg border border-transparent hover:border-gray-600 focus:outline-none" title="Warnung ausblenden">
+                            <button @click="wdDismiss(issue)" class="text-gray-500 hover:text-white bg-gray-800/50 hover:bg-gray-700 transition-colors p-1.5 rounded-lg border border-transparent hover:border-gray-600 focus:outline-none" title="Dismiss warning">
                                 <span class="sr-only">Dismiss</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
@@ -96,7 +96,7 @@
                             <!-- Description -->
                             <template x-if="issue.description">
                                 <div>
-                                    <span class="font-semibold text-gray-400 block uppercase text-xs tracking-wider mb-1">Problem</span>
+                                    <span class="font-semibold text-gray-400 block uppercase text-xs tracking-wider mb-1">Issue</span>
                                     <p class="text-gray-200" x-text="issue.description"></p>
                                 </div>
                             </template>
@@ -104,7 +104,7 @@
                             <!-- Explanation -->
                             <template x-if="issue.explanation">
                                 <div>
-                                    <span class="font-semibold text-gray-400 block uppercase text-xs tracking-wider mb-1">Auswirkung</span>
+                                    <span class="font-semibold text-gray-400 block uppercase text-xs tracking-wider mb-1">Impact</span>
                                     <p class="text-gray-300" x-text="issue.explanation"></p>
                                 </div>
                             </template>
@@ -129,7 +129,7 @@
                                     }">
                                     <span class="font-semibold text-gray-200 flex items-center gap-1.5 mb-1">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                                        Lösungsvorschlag
+                                        Recommendation
                                     </span>
                                     <p class="text-gray-300" x-text="issue.recommendation"></p>
                                 </div>
@@ -140,9 +140,9 @@
                 
                 <template x-if="wdGetIssues().length > 0 && wdVisibleCount() === 0">
                     <div class="text-center py-8 border border-dashed border-gray-700 rounded-xl bg-gray-800/30">
-                        <p class="text-spectora-cyan font-medium mb-3">✅ Alle Warnungen wurden als gelesen markiert.</p>
+                        <p class="text-spectora-cyan font-medium mb-3">✅ All warnings have been marked as read.</p>
                         <button @click="wdRestoreAll()" class="text-xs text-gray-400 hover:text-white border border-gray-600 rounded px-3 py-1.5 hover:bg-gray-700 transition-colors focus:outline-none">
-                            Alle wieder anzeigen
+                            Show all again
                         </button>
                     </div>
                 </template>
@@ -150,7 +150,7 @@
         </template>
 
         <template x-if="(!wdHasWatchdog() || wdGetIssues().length === 0) && (!statusDetails?.keywords_found?.length)">
-            <div class="text-gray-400 italic text-center py-10">Keine spezifischen Sicherheitswarnungen in den Details gefunden.</div>
+            <div class="text-gray-400 italic text-center py-10">No specific security warnings found in the details.</div>
         </template>
     </div> <!-- End scrollable area -->
 

@@ -33,7 +33,7 @@ class DomainController extends Controller
             return response()->json(['message' => 'Settings updated successfully']);
         }
 
-        return back()->with('status', 'Einstellungen gespeichert.');
+        return back()->with('status', 'Settings saved.');
     }
 
     public function detectSitemaps(Domain $domain, SitemapService $sitemapService)
@@ -49,7 +49,7 @@ class DomainController extends Controller
         ]);
 
         return response()->json([
-            'message' => count($sitemaps) . ' Sitemaps gefunden.',
+            'message' => count($sitemaps) . ' sitemaps found.',
             'sitemaps' => $sitemaps
         ]);
     }
@@ -154,7 +154,7 @@ class DomainController extends Controller
             );
         }
 
-        return response()->json(['message' => 'URLs synchronisiert.']);
+        return response()->json(['message' => 'URLs synchronized.']);
     }
 
     public function history(Domain $domain)
@@ -360,7 +360,7 @@ class DomainController extends Controller
             return response()->json(['message' => 'Analysis started']);
         }
 
-        return back()->with('status', "Spectora Audit gestartet. Aktualisiere in wenigen Sekunden.");
+        return back()->with('status', "Spectora audit started. Refresh in a few seconds.");
     }
 
     public function status(Domain $domain)
@@ -404,7 +404,7 @@ class DomainController extends Controller
 
         // Check for duplicates
         if (Domain::where('user_id', $user->id)->where('url', $url)->exists()) {
-             return back()->withErrors(['url' => 'Du überwachst diese Domain bereits.']);
+             return back()->withErrors(['url' => 'You are already monitoring this domain.']);
         }
 
         $domain = Domain::create([
@@ -417,13 +417,13 @@ class DomainController extends Controller
         // Dispatch Job
         \App\Jobs\PerformSpectoraAudit::dispatchSync($domain);
 
-        return redirect()->route('dashboard')->with('status', 'Domain erfolgreich hinzugefügt!');
+        return redirect()->route('dashboard')->with('status', 'Domain successfully added!');
     }
 
     public function destroy(Domain $domain)
     {
         $domain->delete();
 
-        return redirect()->route('dashboard')->with('status', 'Domain gelöscht.');
+        return redirect()->route('dashboard')->with('status', 'Domain deleted.');
     }
 }

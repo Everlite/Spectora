@@ -48,13 +48,13 @@ class SendMonthlyReportsJob implements ShouldQueue
                     // Check Safety
                     if ($domain->safety_status && $domain->safety_status !== 'safe') {
                         $hasIssue = true;
-                        $reason = 'Sicherheits-Warnung: ' . ucfirst($domain->safety_status);
+                        $reason = 'Security Warning: ' . ucfirst($domain->safety_status);
                     }
                     
                     // Check Response Time (Simple check for now, e.g. > 2s)
                     if (!$hasIssue && $domain->response_time > 2.0) {
                         $hasIssue = true;
-                        $reason = 'Hohe Ladezeit: ' . $domain->response_time . 's';
+                        $reason = 'Slow response time: ' . $domain->response_time . 's';
                     }
 
                     if ($hasIssue) {

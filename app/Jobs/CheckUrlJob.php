@@ -80,7 +80,7 @@ class CheckUrlJob implements ShouldQueue
                 $forbiddenKeywords = array_map('trim', explode(',', $this->domain->keyword_must_not_contain));
                 foreach ($forbiddenKeywords as $keyword) {
                     if (!empty($keyword) && str_contains($body, $keyword)) {
-                        $issues[] = "❌ Fehlerwort gefunden: " . htmlspecialchars($keyword);
+                        $issues[] = "❌ Error keyword found: " . htmlspecialchars($keyword);
                         $safetyStatus = 'danger';
                         $safetyDetails['keywords_found'][] = $keyword;
                     }
@@ -111,14 +111,14 @@ class CheckUrlJob implements ShouldQueue
             }
 
             if ($statusCode >= 400 || $statusCode === 0) {
-                $issues[] = "❌ Nicht erreichbar (HTTP $statusCode)";
+                $issues[] = "❌ Unreachable (HTTP $statusCode)";
             }
 
         } catch (\Exception $e) {
             $responseTime = microtime(true) - $startTime;
             Log::error("Check failed for {$url}: " . $e->getMessage());
             $statusCode = 0;
-            $issues[] = "❌ Check fehlgeschlagen: " . $e->getMessage();
+            $issues[] = "❌ Check failed: " . $e->getMessage();
             $safetyStatus = 'danger';
         }
 

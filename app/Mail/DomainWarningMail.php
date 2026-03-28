@@ -22,7 +22,7 @@ class DomainWarningMail extends Mailable
 
     public function build()
     {
-        return $this->subject('⚠️ Spectora Monitor Warnung: ' . $this->domain->url)
+        return $this->subject('⚠️ Spectora Monitor Warning: ' . $this->domain->url)
                     ->view('emails.domain_warning');
     }
 }

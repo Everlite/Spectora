@@ -27,27 +27,27 @@
             <a href="{{ route('dashboard') }}" class="logo" style="color: #0F172A; font-size: 28px;">Spectora</a>
         </div>
 
-        <p style="font-size: 16px; color: #4B5563;">Hallo {{ $user->first_name ?? 'Partner' }},</p>
+        <p style="font-size: 16px; color: #4B5563;">Hello {{ $user->first_name ?? 'Partner' }},</p>
         
-        <p style="font-size: 16px; color: #4B5563;">Dein monatlicher Statusbericht ist da. Im letzten Monat haben wir <strong>{{ $stats['total'] }} Domains</strong> für dich überwacht.</p>
+        <p style="font-size: 16px; color: #4B5563;">Your monthly status report is here. Last month, we monitored <strong>{{ $stats['total'] }} domains</strong> for you.</p>
         
         <div class="summary-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0;">
-            <div style="font-weight: 600; color: #64748B; margin-bottom: 15px;">Gesamtstatus</div>
+            <div style="font-weight: 600; color: #64748B; margin-bottom: 15px;">Overall Status</div>
             <div class="stat-row">
                 <div class="stat-item" style="margin-right: 20px;">
                     <span class="stat-value text-green" style="color: #10B981; font-size: 32px;">{{ $stats['safe'] }}</span>
-                    <span class="stat-label" style="color: #64748B;">Alles OK</span>
+                    <span class="stat-label" style="color: #64748B;">All OK</span>
                 </div>
                 <div class="stat-item" style="margin-left: 20px;">
                     <span class="stat-value {{ $stats['issues'] > 0 ? 'text-red' : 'text-green' }}" style="font-size: 32px; color: {{ $stats['issues'] > 0 ? '#EF4444' : '#10B981' }};">{{ $stats['issues'] }}</span>
-                    <span class="stat-label" style="color: #64748B;">Handlungsbedarf</span>
+                    <span class="stat-label" style="color: #64748B;">Needs Attention</span>
                 </div>
             </div>
         </div>
 
         @if(count($stats['problem_domains']) > 0)
             <div class="problem-list">
-                <strong style="color: #EF4444; display: block; margin-bottom: 15px;">⚠️ Folgende Domains benötigen Aufmerksamkeit:</strong>
+                <strong style="color: #EF4444; display: block; margin-bottom: 15px;">⚠️ The following domains need attention:</strong>
                 @foreach($stats['problem_domains'] as $domain)
                     <div class="problem-item" style="padding: 15px 0;">
                         <a href="{{ route('domains.show', $domain['uuid']) }}" style="color: #0F172A; text-decoration: none; font-weight: bold; font-size: 16px;">
@@ -59,24 +59,24 @@
                 @endforeach
                 @if($stats['issues'] > count($stats['problem_domains']))
                     <div class="problem-item" style="color: #94A3B8; font-style: italic; padding-top: 15px;">
-                        ...und {{ $stats['issues'] - count($stats['problem_domains']) }} weitere.
+                        ...and {{ $stats['issues'] - count($stats['problem_domains']) }} more.
                     </div>
                 @endif
             </div>
         @else
             <div style="text-align: center; padding: 30px; background-color: #ECFDF5; border-radius: 8px; color: #065F46;">
                 <span style="font-size: 24px;">🎉</span><br>
-                <strong>Alles im grünen Bereich!</strong><br>
-                Keine Probleme erkannt.
+                <strong>Everything is looking good!</strong><br>
+                No issues detected.
             </div>
         @endif
         
         <div class="btn-container">
-            <a href="{{ route('dashboard') }}" class="btn" style="background-color: #0F172A; padding: 14px 28px; border-radius: 8px; font-size: 16px;">Zum Dashboard & Berichte laden</a>
+            <a href="{{ route('dashboard') }}" class="btn" style="background-color: #0F172A; padding: 14px 28px; border-radius: 8px; font-size: 16px;">Go to Dashboard & View Reports</a>
         </div>
         
         <div class="footer" style="border-top: 1px solid #E2E8F0; padding-top: 20px; margin-top: 40px;">
-            <p style="color: #94A3B8;">Dieser Bericht wurde automatisch erstellt.<br>
+            <p style="color: #94A3B8;">This report was automatically generated.<br>
             &copy; {{ date('Y') }} Spectora Monitoring</p>
         </div>
     </div>
