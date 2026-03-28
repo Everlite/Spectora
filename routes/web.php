@@ -36,10 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/domains/{domain}/notes', [\App\Http\Controllers\DomainNoteController::class, 'store'])->name('domains.notes.store');
     Route::patch('/notes/{note}', [\App\Http\Controllers\DomainNoteController::class, 'update'])->name('notes.update');
     Route::delete('/notes/{note}', [\App\Http\Controllers\DomainNoteController::class, 'destroy'])->name('notes.destroy');
-    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-
-    // Admin Dashboard
-    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
 
     // Web Push Subscriptions
     Route::post('/subscriptions', [\App\Http\Controllers\PushSubscriptionController::class, 'store'])->name('subscriptions.store');
