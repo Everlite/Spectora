@@ -1,68 +1,25 @@
-<div x-data="{ 
-        showJson: false, 
-        dismissed: [],
-        storageKey: '',
-        init() {
-            this.$watch('statusUrl', (val) => {
-                if (val) {
-                    this.storageKey = 'spectora_dismissed_' + val.replace(/[^a-zA-Z0-9]/g, '_');
-                    try {
-                        this.dismissed = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-                    } catch(e) { this.dismissed = []; }
-                }
-            });
-            // Initial load if statusUrl is already set
-            if (this.statusUrl) {
-                this.storageKey = 'spectora_dismissed_' + this.statusUrl.replace(/[^a-zA-Z0-9]/g, '_');
-                try {
-                    this.dismissed = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-                } catch(e) { this.dismissed = []; }
-            }
-        },
-        hasWatchdog() { return this.statusDetails && this.statusDetails.watchdog; },
-        get issues() { return this.hasWatchdog() ? (this.statusDetails.watchdog.issues || []) : []; },
-        get summary() { return this.hasWatchdog() ? (this.statusDetails.watchdog.summary || {critical:0, warning:0, info:0}) : {critical:0, warning:0, info:0}; },
-        issueKey(issue) { return (issue.type || '') + '::' + (issue.title || ''); },
-        dismiss(issue) { 
-            const key = this.issueKey(issue);
-            if (!this.dismissed.includes(key)) {
-                this.dismissed.push(key);
-                localStorage.setItem(this.storageKey, JSON.stringify(this.dismissed));
-            }
-        },
-        isDismissed(issue) { return this.dismissed.includes(this.issueKey(issue)); },
-        get visibleCount() { return this.issues.filter(i => !this.isDismissed(i)).length; },
-        restoreAll() {
-            this.dismissed = [];
-            localStorage.removeItem(this.storageKey);
-        },
-        copyJson() {
-            navigator.clipboard.writeText(JSON.stringify(this.statusDetails, null, 2));
-            this.$refs.copyBtn && (this.$refs.copyBtn.textContent = '✓ Copied!');
-            setTimeout(() => { this.$refs.copyBtn && (this.$refs.copyBtn.textContent = 'Copy'); }, 1500);
-        }
-     }" 
-     class="space-y-6 text-left w-full h-full max-h-[80vh] flex flex-col">
+{{-- Watchdog Report Partial - uses parent dashboardManager() scope --}}
+<div class="space-y-6 text-left w-full h-full max-h-[80vh] flex flex-col">
 
     <!-- Header / Summary -->
-    <template x-if="hasWatchdog()">
+    <template x-if="wdHasWatchdog()">
         <div class="flex flex-wrap gap-3 flex-shrink-0">
-            <template x-if="summary.critical > 0">
+            <template x-if="wdSummary.critical > 0">
                 <div class="px-3 py-1 bg-red-900/50 border border-red-700 text-red-200 rounded-full text-sm font-semibold flex items-center shadow-sm">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <span x-text="summary.critical + ' Critical'"></span>
+                    <span x-text="wdSummary.critical + ' Critical'"></span>
                 </div>
             </template>
-            <template x-if="summary.warning > 0">
+            <template x-if="wdSummary.warning > 0">
                 <div class="px-3 py-1 bg-yellow-900/50 border border-yellow-700 text-yellow-200 rounded-full text-sm font-semibold flex items-center shadow-sm">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <span x-text="summary.warning + ' Warnings'"></span>
+                    <span x-text="wdSummary.warning + ' Warnings'"></span>
                 </div>
             </template>
-            <template x-if="summary.info > 0">
+            <template x-if="wdSummary.info > 0">
                 <div class="px-3 py-1 bg-blue-900/50 border border-blue-700 text-blue-200 rounded-full text-sm font-semibold flex items-center shadow-sm">
                     <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span x-text="summary.info + ' Info'"></span>
+                    <span x-text="wdSummary.info + ' Info'"></span>
                 </div>
             </template>
         </div>
@@ -88,10 +45,10 @@
         </template>
 
         <!-- Issues Loop (Watchdog) -->
-        <template x-if="hasWatchdog() && issues.length > 0">
+        <template x-if="wdHasWatchdog() && wdIssues.length > 0">
             <div class="space-y-4">
-                <template x-for="(issue, index) in issues" :key="index">
-                    <div x-show="!isDismissed(issue)" 
+                <template x-for="(issue, index) in wdIssues" :key="index">
+                    <div x-show="!wdIsDismissed(issue)" 
                         x-transition:leave="transition ease-in duration-300"
                         x-transition:leave-start="opacity-100 transform scale-100"
                         x-transition:leave-end="opacity-0 transform scale-95"
@@ -129,7 +86,7 @@
                             </div>
                             
                             <!-- Dismiss Button -->
-                            <button @click="dismiss(issue)" class="text-gray-500 hover:text-white bg-gray-800/50 hover:bg-gray-700 transition-colors p-1.5 rounded-lg border border-transparent hover:border-gray-600 focus:outline-none" title="Warnung ausblenden">
+                            <button @click="wdDismiss(issue)" class="text-gray-500 hover:text-white bg-gray-800/50 hover:bg-gray-700 transition-colors p-1.5 rounded-lg border border-transparent hover:border-gray-600 focus:outline-none" title="Warnung ausblenden">
                                 <span class="sr-only">Dismiss</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
@@ -181,10 +138,10 @@
                     </div>
                 </template>
                 
-                <template x-if="issues.length > 0 && visibleCount === 0">
+                <template x-if="wdIssues.length > 0 && wdVisibleCount === 0">
                     <div class="text-center py-8 border border-dashed border-gray-700 rounded-xl bg-gray-800/30">
                         <p class="text-spectora-cyan font-medium mb-3">✅ Alle Warnungen wurden als gelesen markiert.</p>
-                        <button @click="restoreAll()" class="text-xs text-gray-400 hover:text-white border border-gray-600 rounded px-3 py-1.5 hover:bg-gray-700 transition-colors focus:outline-none">
+                        <button @click="wdRestoreAll()" class="text-xs text-gray-400 hover:text-white border border-gray-600 rounded px-3 py-1.5 hover:bg-gray-700 transition-colors focus:outline-none">
                             Alle wieder anzeigen
                         </button>
                     </div>
@@ -192,7 +149,7 @@
             </div>
         </template>
 
-        <template x-if="(!hasWatchdog() || issues.length === 0) && (!statusDetails?.keywords_found?.length)">
+        <template x-if="(!wdHasWatchdog() || wdIssues.length === 0) && (!statusDetails?.keywords_found?.length)">
             <div class="text-gray-400 italic text-center py-10">Keine spezifischen Sicherheitswarnungen in den Details gefunden.</div>
         </template>
     </div> <!-- End scrollable area -->
@@ -205,9 +162,9 @@
                 Developer JSON View
             </button>
             <template x-if="showJson">
-                <button @click="copyJson()" class="text-xs text-gray-300 hover:text-white flex items-center border border-gray-600 rounded px-2.5 py-1 hover:bg-gray-700 focus:outline-none transition-colors">
+                <button @click="wdCopyJson()" class="text-xs text-gray-300 hover:text-white flex items-center border border-gray-600 rounded px-2.5 py-1 hover:bg-gray-700 focus:outline-none transition-colors">
                     <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    <span x-ref="copyBtn">Copy</span>
+                    <span x-ref="wdCopyBtn">Copy</span>
                 </button>
             </template>
         </div>

@@ -536,11 +536,22 @@
                 statusDetails: null,
                 statusType: '',
 
+                // Watchdog Report Logic
+                showJson: false,
+                wdDismissed: [],
+                wdStorageKey: '',
+
                 openStatus(url, details, type) {
                     this.statusUrl = url;
                     this.statusDetails = details;
                     this.statusType = type;
                     this.isStatusOpen = true;
+                    this.showJson = false;
+                    // Load dismissed state from localStorage for this domain
+                    this.wdStorageKey = 'spectora_dismissed_' + url.replace(/[^a-zA-Z0-9]/g, '_');
+                    try {
+                        this.wdDismissed = JSON.parse(localStorage.getItem(this.wdStorageKey) || '[]');
+                    } catch(e) { this.wdDismissed = []; }
                 },
 
                 closeStatus() {
@@ -594,6 +605,30 @@
                     if (response.ok) {
                         await this.fetchNotes();
                     }
+                },
+
+                // Watchdog Report Helpers
+                wdHasWatchdog() { return this.statusDetails && this.statusDetails.watchdog; },
+                get wdIssues() { return this.wdHasWatchdog() ? (this.statusDetails.watchdog.issues || []) : []; },
+                get wdSummary() { return this.wdHasWatchdog() ? (this.statusDetails.watchdog.summary || {critical:0, warning:0, info:0}) : {critical:0, warning:0, info:0}; },
+                wdIssueKey(issue) { return (issue.type || '') + '::' + (issue.title || ''); },
+                wdDismiss(issue) {
+                    const key = this.wdIssueKey(issue);
+                    if (!this.wdDismissed.includes(key)) {
+                        this.wdDismissed.push(key);
+                        localStorage.setItem(this.wdStorageKey, JSON.stringify(this.wdDismissed));
+                    }
+                },
+                wdIsDismissed(issue) { return this.wdDismissed.includes(this.wdIssueKey(issue)); },
+                get wdVisibleCount() { return this.wdIssues.filter(i => !this.wdIsDismissed(i)).length; },
+                wdRestoreAll() {
+                    this.wdDismissed = [];
+                    localStorage.removeItem(this.wdStorageKey);
+                },
+                wdCopyJson() {
+                    navigator.clipboard.writeText(JSON.stringify(this.statusDetails, null, 2));
+                    const btn = this.$refs.wdCopyBtn;
+                    if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => { btn.textContent = 'Copy'; }, 1500); }
                 },
             };
         }
