@@ -96,7 +96,7 @@
                                 @endif
 
                                 <!-- Security Status -->
-                                <div @click="openStatus('{{ $domain->url }}', {{ json_encode($domain->safety_details ?? []) }}, '{{ $domain->safety_status }}')" 
+                                <div @click="openStatus({{ json_encode($domain->url) }}, {{ json_encode($domain->safety_details ?? []) }}, {{ json_encode($domain->safety_status) }})" 
                                      class="relative group flex items-center justify-center space-x-1 cursor-pointer px-2 py-1 rounded border text-xs font-bold uppercase w-28 h-8 shrink-0
                                     @if($domain->safety_status === 'safe') bg-green-900 text-green-400 border-green-700
                                     @elseif($domain->safety_status === 'danger') bg-red-900 text-red-400 border-red-700
