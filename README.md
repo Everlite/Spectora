@@ -98,6 +98,50 @@ Since Spectora uses no external APIs, configuration is minimal:
 
 ---
 
+## 🌍 Production Deployment & Analytics Tracking
+
+By default, Spectora is accessible at `http://localhost:8000`. If you want to use the **Analytics Tracking** feature (to track visitors on your clients' websites), your Spectora dashboard must be publicly accessible via a real domain/subdomain (e.g., `spectora.your-agency.com`).
+
+### 1. DNS Setup
+Create an `A-Record` for your desired subdomain that points to the public IP address of your Spectora server.
+
+### 2. Update .env
+On your server, modify the `.env` file to set your public URL. This is crucial for the tracking script (`sp-core.js`) to generate correct absolute URLs:
+```env
+APP_URL=https://spectora.your-agency.com
+```
+
+### 3. Nginx Reverse Proxy
+Install Nginx on your host machine and create a new site configuration (e.g., `/etc/nginx/sites-available/spectora`):
+
+```nginx
+server {
+    server_name spectora.your-agency.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+Enable the site and reload Nginx:
+```bash
+ln -s /etc/nginx/sites-available/spectora /etc/nginx/sites-enabled/
+systemctl reload nginx
+```
+
+### 4. SSL Certificate (HTTPS)
+We strongly recommend using [Certbot](https://certbot.eff.org/) to secure your connection automatically:
+```bash
+apt install certbot python3-certbot-nginx
+certbot --nginx -d spectora.your-agency.com
+```
+Once this is done, the **Tracking Snippet** provided in the Spectora dashboard will function correctly on external websites.
+---
+
 ## 🛡️ Data Privacy & GDPR
 
 Spectora is the ideal choice for European agencies:
