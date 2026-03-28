@@ -1,6 +1,6 @@
 # 🛡️ Spectora: Google-Free Agency Edition
 
-[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
 [![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com)
 [![GDPR](https://img.shields.io/badge/GDPR-Safe-003399?style=for-the-badge)](https://gdpr-info.eu/)
 [![Google-Free](https://img.shields.io/badge/Google-Purged-green?style=for-the-badge)](https://github.com/Everlite/Spectora)
@@ -154,7 +154,13 @@ Spectora is the ideal choice for European agencies:
 ## 📝 License & Credits
 
 Developed for agencies that value privacy and independence. 
-*   **Framework**: [Laravel 11](https://laravel.com)
+
+### 🔄 Recent Updates
+*   **Infrastructure**: Upgraded core framework to Laravel 12.
+*   **Monitoring Engine**: Optimized `CheckUrlJob` and `CheckDomainJob` for precise status tracking and preventing database race-conditions.
+*   **Dashboard UI**: Restored HTML structural integrity for absolute tab-isolation (Monitoring vs. Analytics) and separated Chart.js tracking instances.
+
+*   **Framework**: [Laravel 12](https://laravel.com)
 *   **Frontend**: [Alpine.js](https://alpinejs.dev) & Tailwind CSS
 *   **Monitoring**: [Lighthouse](https://developers.google.com/web/tools/lighthouse) (Local Version)
 
